@@ -1,0 +1,16 @@
+pandoc: 2.19.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  advanced: advanced.html
+  custom_stratification: custom_stratification.html
+  models_first_diff_nonhier: models_first_diff_nonhier.html
+  workflow: workflow.html
+  bbsBayes: bbsBayes.html
+  convergence: convergence.html
+  stratification: stratification.html
+last_built: 2022-11-04T20:05Z
+urls:
+  reference: http://steffilazerte.ca/bbsBayes/reference
+  article: http://steffilazerte.ca/bbsBayes/articles
+
