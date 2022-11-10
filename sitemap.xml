@@ -91,13 +91,7 @@
     <loc>http://steffilazerte.ca/bbsBayes/reference/generate_indices.html</loc>
   </url>
   <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/generate_map.html</loc>
-  </url>
-  <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/generate_trends.html</loc>
-  </url>
-  <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/geofacet_plot.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/have_bbs_data.html</loc>
@@ -118,7 +112,13 @@
     <loc>http://steffilazerte.ca/bbsBayes/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/plot_geofacet.html</loc>
+  </url>
+  <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/plot_indices.html</loc>
+  </url>
+  <url>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/plot_map.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/prepare_data.html</loc>

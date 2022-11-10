@@ -66,12 +66,21 @@ use as input for models.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_data</span><span class="op">(</span></span>
-<span>  strata_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">strata_data</span>,</span>
 <span>  min_year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  min_n_routes <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  min_max_route_years <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>  min_mean_route_years <span class="op">=</span> <span class="fl">1</span></span>
+<span>  min_mean_route_years <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">species</span>,</span>
+<span>  <span class="va">model</span>,</span>
+<span>  <span class="va">heavy_tailed</span>,</span>
+<span>  <span class="va">n_knots</span>,</span>
+<span>  <span class="va">basis</span>,</span>
+<span>  <span class="va">sampler</span>,</span>
+<span>  <span class="va">strat_data</span>,</span>
+<span>  <span class="va">strata_rem</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -104,6 +113,42 @@ observations of species on at least 1 route. Defaults to 3</p></dd>
 <dt>min_mean_route_years</dt>
 <dd><p>Required minimum average of years per route with
 the species observed. Defaults to 1.</p></dd>
+
+
+<dt>quiet</dt>
+<dd><p>Logical. Suppress progress messages? Default <code>FALSE</code></p></dd>
+
+
+<dt>species</dt>
+<dd><p>Defunct. Use <code>species</code> in <code><a href="stratify.html">stratify()</a></code> instead</p></dd>
+
+
+<dt>model</dt>
+<dd><p>Defunct. Use <code>model</code> in <code><a href="run_model.html">run_model()</a></code> instead</p></dd>
+
+
+<dt>heavy_tailed</dt>
+<dd><p>Defunct. Use <code>heavy_tailed</code> in <code><a href="run_model.html">run_model()</a></code> instead</p></dd>
+
+
+<dt>n_knots</dt>
+<dd><p>Defunct. Use <code>n_knots</code> in <code><a href="run_model.html">run_model()</a></code> instead</p></dd>
+
+
+<dt>basis</dt>
+<dd><p>Defunct. Use <code>basis</code> in <code><a href="run_model.html">run_model()</a></code> instead</p></dd>
+
+
+<dt>sampler</dt>
+<dd><p>Defunct.</p></dd>
+
+
+<dt>strat_data</dt>
+<dd><p>Defunct. Use <code>strata_data</code> instead</p></dd>
+
+
+<dt>strata_rem</dt>
+<dd><p>Defunct. Use <code>custom_strata</code> in <code><a href="stratify.html">stratify()</a></code> instead</p></dd>
 
 </dl></div>
     <div class="section level2">

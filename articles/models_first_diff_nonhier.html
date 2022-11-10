@@ -94,6 +94,12 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BrandonEdwards/bbsBayes" class="external-link">bbsBayes</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; bbsBayes v3.0.0</span></span>
+<span><span class="co">#&gt; Note: version 3+ represents a major shift in functionality, noteably:</span></span>
+<span><span class="co">#&gt;  - The underlying Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
+<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in many deprecated/renamed</span></span>
+<span><span class="co">#&gt;    function arguments</span></span>
+<span><span class="co">#&gt; See the documentation for more details: https://BrandonEdwards.github.io/bbsBayes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_usgs"</span>, sample <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -132,27 +138,27 @@
 <span><span class="co">#&gt; Chain 1 Iteration:  6 / 15 [ 40%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 1 Iteration: 15 / 15 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Log location parameter[533] is -inf, but must be finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -inf, but must be finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
@@ -161,27 +167,27 @@
 <span><span class="co">#&gt; Chain 2 Iteration:  1 / 15 [  6%]  (Warmup) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration:  6 / 15 [ 40%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Log location parameter[533] is -inf, but must be finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -inf, but must be finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpLqgry0/model-4544499d909.stan', line 228, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp8iHsJV/model-4923349b9cdc.stan', line 228, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
@@ -194,7 +200,7 @@
 <span><span class="co">#&gt; Total execution time: 0.4 seconds.</span></span>
 <span><span class="co">#&gt; Warning: 20 of 20 (100.0%) transitions ended with a divergence.</span></span>
 <span><span class="co">#&gt; See https://mc-stan.org/misc/warnings for details.</span></span>
-<span><span class="co">#&gt; Saving model output to /home/runner/work/bbsBayes/bbsBayes/vignettes/articles/model_data/BBS_STAN_first_diff_nonhier_2022-11-07_01.rds</span></span></code></pre></div>
+<span><span class="co">#&gt; Saving model output to /home/runner/work/bbsBayes/bbsBayes/vignettes/articles/model_data/BBS_STAN_first_diff_nonhier_2022-11-10_01.rds</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_indices.html">generate_indices</a></span><span class="op">(</span>model_output <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                      regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"continent"</span>,</span>

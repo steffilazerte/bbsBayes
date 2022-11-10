@@ -198,7 +198,7 @@ inspecting the model diagnostics with the package ggmcmc.</p>
 that you avoid having to wait for an additional burn-in period.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### if jags_mod has failed to converge...</span></span>
-<span><span class="va">new_initials</span> <span class="op">&lt;-</span> <span class="fu">get_final_values</span><span class="op">(</span><span class="va">jags_mod</span><span class="op">)</span></span>
+<span><span class="va">new_initials</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bbsBayes-defunct.html">get_final_values</a></span><span class="op">(</span><span class="va">jags_mod</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">jags_mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span>jags_data <span class="op">=</span> <span class="va">jags_data</span>,</span>
 <span>                               n_saved_steps <span class="op">=</span> <span class="fl">1000</span>,</span>
@@ -300,22 +300,15 @@ devices.</p>
 <p>The trends can be mapped to produce strata maps coloured by species
 population trends.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_map.html">generate_map</a></span><span class="op">(</span><span class="va">trends</span>, col_viridis <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">trends</span>, col_viridis <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">mp</span></span></code></pre></div>
 <p><img src="reference/figures/BARS_trendmap.png"></p>
 </div>
 <div class="section level3">
 <h3 id="geofacet-trajectories">Geofacet Trajectories<a class="anchor" aria-label="anchor" href="#geofacet-trajectories"></a>
 </h3>
-<p>For stratifications that can be compiled by political regions (i.e.,
-<code>bbs_cws</code>, <code>bbs_usgs</code>, or <code>state</code>), the
-function <code>geofacet_plot</code> will generate a ggplot object that
-plots the state and province level population trajectories in facets
-arranged in an approximately geographic arrangement. These plots offer a
-concise, range-wide summary of a species’ population status and
-trends.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/geofacet_plot.html">geofacet_plot</a></span><span class="op">(</span>indices_list <span class="op">=</span> <span class="va">indices</span>,</span>
+<code class="sourceCode R"><span><span class="va">gf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_geofacet.html">plot_geofacet</a></span><span class="op">(</span>indices_list <span class="op">=</span> <span class="va">indices</span>,</span>
 <span>                    trends <span class="op">=</span> <span class="va">trends</span>,</span>
 <span>                    multiple <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                    slope <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -731,7 +724,7 @@ particular end-point years. These slope trends can be added to the trend
 output table by setting the <code>slope = TRUE</code> argument in
 <code><a href="../reference/generate_trends.html">generate_trends()</a></code>. The standard trends are still
 calculated, but additional columns are added that include the alternate
-estimates. NOTE: the <code><a href="../reference/generate_map.html">generate_map()</a></code> function can map slope
+estimates. NOTE: the <code><a href="../reference/plot_map.html">plot_map()</a></code> function can map slope
 trends as well with the same <code>slope = TRUE</code> argument.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>    <span class="co">#jags_data_firstdiff &lt;- prepare_jags_data(stratified_data, </span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                           species_to_run = "American Kestrel",</span></span>
@@ -746,7 +739,7 @@ trends as well with the same <code>slope = TRUE</code> argument.</p>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">Min_year =</span> <span class="dv">2008</span>,</span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">Max_year =</span> <span class="dv">2018</span>,</span>
 <span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">slope =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">generate_map</span>(fd_slope_trends_0<span class="fl">.8</span>_18,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_map</span>(fd_slope_trends_0<span class="fl">.8</span>_18,</span>
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">slope =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stratify_by =</span> <span class="st">"bbs_usgs"</span>)</span>
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">)</span></span></code></pre></div>
@@ -800,7 +793,7 @@ strata.</p>
 <p>First extract a dataframe that defines the original strata used in
 the analysis.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">st_comp_regions</span> <span class="op">&lt;-</span> <span class="fu">get_composite_regions</span><span class="op">(</span>strata_type <span class="op">=</span> <span class="va">stratification</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">st_comp_regions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bbsBayes-defunct.html">get_composite_regions</a></span><span class="op">(</span>strata_type <span class="op">=</span> <span class="va">stratification</span><span class="op">)</span></span></code></pre></div>
 <p>The add a column to the dataframe that groups the original strata
 into the desired custom regions.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
@@ -844,7 +837,7 @@ off! We’ll add some more details and examples soon.</p>
 <h2 id="comparing-models">Comparing Models<a class="anchor" aria-label="anchor" href="#comparing-models"></a>
 </h2>
 <p>Finally, bbsBayes can be used to run Bayesian cross-validations. For
-example, the <code>get_final_values()</code> function is useful to
+example, the <code><a href="../reference/bbsBayes-defunct.html">get_final_values()</a></code> function is useful to
 provide an efficient starting point for a cross-validation runs, without
 having to wait for another full burn-in period.</p>
 <p>Paper that includes an example of how to implement a cross-validation
