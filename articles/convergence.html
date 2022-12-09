@@ -52,10 +52,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -86,7 +87,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Assessing Model Convergence</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/BrandonEdwards/bbsBayes/blob/HEAD/vignettes/convergence.Rmd" class="external-link"><code>vignettes/convergence.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BrandonEdwards/bbsBayes/blob/HEAD/vignettes/articles/convergence.Rmd" class="external-link"><code>vignettes/articles/convergence.Rmd</code></a></small>
       <div class="d-none name"><code>convergence.Rmd</code></div>
     </div>
 
@@ -96,8 +97,8 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BrandonEdwards/bbsBayes" class="external-link">bbsBayes</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; bbsBayes v3.0.0</span></span>
 <span><span class="co">#&gt; Note: version 3+ represents a major shift in functionality, noteably:</span></span>
-<span><span class="co">#&gt;  - The underlying Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
-<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in many deprecated/renamed</span></span>
+<span><span class="co">#&gt;  - The Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
+<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in deprecated/renamed</span></span>
 <span><span class="co">#&gt;    function arguments</span></span>
 <span><span class="co">#&gt; See the documentation for more details: https://BrandonEdwards.github.io/bbsBayes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
@@ -113,117 +114,77 @@
 Pacific Wren.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, sample_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/prepare_data.html">prepare_data</a></span><span class="op">(</span>min_year <span class="op">=</span> <span class="fl">2009</span>, max_year <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/prepare_data.html">prepare_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"first_diff"</span>,</span>
-<span>            iter_sampling <span class="op">=</span> <span class="fl">20</span>, iter_warmup <span class="op">=</span> <span class="fl">20</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using 'bbs_cws' (standard) stratification</span></span>
-<span><span class="co">#&gt; Using sample BBS data...</span></span>
-<span><span class="co">#&gt; Using species Pacific Wren (sample data)</span></span>
-<span><span class="co">#&gt; Stratifying data...</span></span>
-<span><span class="co">#&gt;   Combining BCR 7 and NS and PEI...</span></span>
-<span><span class="co">#&gt;   Renaming routes...</span></span>
-<span><span class="co">#&gt; Running MCMC with 2 chains, at most 4 in parallel...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Chain 1 WARNING: There aren't enough warmup iterations to fit the </span></span>
-<span><span class="co">#&gt; Chain 1          three stages of adaptation as currently configured. </span></span>
-<span><span class="co">#&gt; Chain 1          Reducing each adaptation stage to 15%/75%/10% of </span></span>
-<span><span class="co">#&gt; Chain 1          the given number of warmup iterations: </span></span>
-<span><span class="co">#&gt; Chain 1            init_buffer = 3 </span></span>
-<span><span class="co">#&gt; Chain 1            adapt_window = 15 </span></span>
-<span><span class="co">#&gt; Chain 1            term_buffer = 2 </span></span>
-<span><span class="co">#&gt; Chain 1 Iteration:  1 / 40 [  2%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 1</span></span>
-<span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 1</span></span>
-<span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 1</span></span>
-<span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 1</span></span>
-<span><span class="co">#&gt; Chain 2 WARNING: There aren't enough warmup iterations to fit the </span></span>
-<span><span class="co">#&gt; Chain 2          three stages of adaptation as currently configured. </span></span>
-<span><span class="co">#&gt; Chain 2          Reducing each adaptation stage to 15%/75%/10% of </span></span>
-<span><span class="co">#&gt; Chain 2          the given number of warmup iterations: </span></span>
-<span><span class="co">#&gt; Chain 2            init_buffer = 3 </span></span>
-<span><span class="co">#&gt; Chain 2            adapt_window = 15 </span></span>
-<span><span class="co">#&gt; Chain 2            term_buffer = 2 </span></span>
-<span><span class="co">#&gt; Chain 2 Iteration:  1 / 40 [  2%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 2</span></span>
-<span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 2</span></span>
-<span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 2</span></span>
-<span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
-<span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
-<span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
-<span><span class="co">#&gt; Chain 2</span></span>
-<span><span class="co">#&gt; Chain 1 Iteration: 21 / 40 [ 52%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 2 Iteration: 21 / 40 [ 52%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 1 Iteration: 40 / 40 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 1 finished in 21.8 seconds.</span></span>
-<span><span class="co">#&gt; Chain 2 Iteration: 40 / 40 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 2 finished in 31.3 seconds.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Both chains finished successfully.</span></span>
-<span><span class="co">#&gt; Mean chain execution time: 26.6 seconds.</span></span>
-<span><span class="co">#&gt; Total execution time: 31.7 seconds.</span></span>
-<span><span class="co">#&gt; Saving model output to /home/runner/work/bbsBayes/bbsBayes/vignettes/BBS_STAN_first_diff_hier_2022-11-17_01.rds</span></span></code></pre></div>
-<p>Now we can calculate our convergence metrics</p>
+<span>            iter_sampling <span class="op">=</span> <span class="fl">20</span>, iter_warmup <span class="op">=</span> <span class="fl">20</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>Or we can use the example model included in bbsBayes,
+<code>pacific_wren_model</code></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">conv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/convergence.html">convergence</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="va">pacific_wren_model</span></span></code></pre></div>
+<p>Now we can calculate our convergence metrics</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">conv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_convergence.html">get_convergence</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span><span class="va">conv</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2,391 × 5</span></span></span>
-<span><span class="co">#&gt;    variable_type variable      ess_bulk ess_tail  rhat</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> lp__          lp__              13.5     22.0 1.06 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> strata_raw    strata_raw[1]     64.1     20.9 0.987</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> strata_raw    strata_raw[2]     64.1     44.7 1.00 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> strata_raw    strata_raw[3]     64.1     24.2 0.997</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> strata_raw    strata_raw[4]     64.1     47.8 1.06 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> strata_raw    strata_raw[5]     50.7     40.2 1.01 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> strata_raw    strata_raw[6]     64.1     51.0 0.981</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> strata_raw    strata_raw[7]     64.1     51.0 0.984</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> strata_raw    strata_raw[8]     46.8     24.2 1.04 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> strata_raw    strata_raw[9]     64.1     40.2 0.999</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 2,381 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9,966 × 5</span></span></span>
+<span><span class="co">#&gt;    variable_type variable       rhat ess_bulk ess_tail</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> lp__          lp__          1.24      17.6     17.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> strata_raw    strata_raw[1] 1.16      64.1     43.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> strata_raw    strata_raw[2] 1.08      64.1     28.0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> strata_raw    strata_raw[3] 1.03      64.1     49.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> strata_raw    strata_raw[4] 1.03      64.1     49.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> strata_raw    strata_raw[5] 1.13      64.1     56.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> strata_raw    strata_raw[6] 1.32      64.1     18.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> strata_raw    strata_raw[7] 1.00      64.1     49.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> strata_raw    strata_raw[8] 0.975     64.1     56.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> strata_raw    strata_raw[9] 0.988     57.7     24.6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 9,956 more rows</span></span></span></code></pre></div>
 <p>Wow, there are a <em>lot</em> of variables here.</p>
 <p>We can visualize this by transforming the data frame and using
 ggplot2</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tconv</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="va">conv</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ess_bulk</span>, <span class="va">ess_tail</span>, <span class="va">rhat</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tconv</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">variable</span>, y <span class="op">=</span> <span class="va">value</span>, colour <span class="op">=</span> <span class="va">variable_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">name</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_colour_viridis_d</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 99 rows containing missing values (`geom_point()`).</span></span>
+<span><span class="co">#&gt; Warning: Removed 123 rows containing missing values (`geom_point()`).</span></span>
 <span><span class="co">#&gt; Warning: The `guide` argument in `scale_*()` cannot be `FALSE`. This was deprecated in</span></span>
 <span><span class="co">#&gt; ggplot2 3.3.4.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use "none" instead.</span></span></code></pre></div>
-<p><img src="convergence_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="convergence_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>We can also choose to extract only some variables. To see which ones
+are available, use the <code><a href="../reference/get_model_vars.html">get_model_vars()</a></code> function.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_model_vars.html">get_model_vars</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "lp__"          "strata_raw"    "STRATA"        "eta"          </span></span>
+<span><span class="co">#&gt;  [5] "obs_raw"       "ste_raw"       "sdnoise"       "sdobs"        </span></span>
+<span><span class="co">#&gt;  [9] "sdste"         "sdstrata"      "nu"            "sdbeta"       </span></span>
+<span><span class="co">#&gt; [13] "sdBETA"        "BETA_raw"      "beta_raw"      "E"            </span></span>
+<span><span class="co">#&gt; [17] "beta"          "yeareffect"    "BETA"          "YearEffect"   </span></span>
+<span><span class="co">#&gt; [21] "strata"        "phi"           "n"             "retrans_noise"</span></span>
+<span><span class="co">#&gt; [25] "retrans_obs"   "retrans_ste"   "Hyper_N"       "adj"</span></span></code></pre></div>
+<p>We can also extract summary information from the model via the helper
+function <code><a href="../reference/get_summary.html">get_summary()</a></code> (wrapper for
+<code><a href="https://mc-stan.org/cmdstanr/reference/fit-method-summary.html" class="external-link">cmdstanr::summary()</a></code>)</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_summary.html">get_summary</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9,966 × 10</span></span></span>
+<span><span class="co">#&gt;    variable          mean   median     sd    mad       q5      q95  rhat ess_b…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> lp__          -<span style="color: #BB0000;">1.30</span><span style="color: #949494;">e</span>+4 -<span style="color: #BB0000;">1.30</span><span style="color: #949494;">e</span>+4 47.4   44.3   -<span style="color: #BB0000;">1.31</span><span style="color: #949494;">e</span>+4 -<span style="color: #BB0000;">1.30</span><span style="color: #949494;">e</span>+4 1.24     17.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> strata_raw[1] -<span style="color: #BB0000;">8.50</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> -<span style="color: #BB0000;">8.31</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  0.475  0.486 -<span style="color: #BB0000;">1.58</span><span style="color: #949494;">e</span>+0 -<span style="color: #BB0000;">2.07</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 1.16     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> strata_raw[2] -<span style="color: #BB0000;">2.49</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> -<span style="color: #BB0000;">2.13</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  0.272  0.221 -<span style="color: #BB0000;">6.54</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  1.15<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 1.08     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> strata_raw[3] -<span style="color: #BB0000;">1.91</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> -<span style="color: #BB0000;">1.79</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  0.441  0.440 -<span style="color: #BB0000;">9.21</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  5.22<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 1.03     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> strata_raw[4]  1.63<span style="color: #949494;">e</span>+0  1.60<span style="color: #949494;">e</span>+0  0.353  0.413  1.11<span style="color: #949494;">e</span>+0  2.15<span style="color: #949494;">e</span>+0 1.03     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> strata_raw[5] -<span style="color: #BB0000;">2.05</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> -<span style="color: #BB0000;">2.21</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  0.303  0.308 -<span style="color: #BB0000;">6.61</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  2.70<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 1.13     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> strata_raw[6]  1.44<span style="color: #949494;">e</span>+0  1.39<span style="color: #949494;">e</span>+0  0.688  0.608  5.22<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  2.63<span style="color: #949494;">e</span>+0 1.32     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> strata_raw[7] -<span style="color: #BB0000;">1.01</span><span style="color: #949494;">e</span>+0 -<span style="color: #BB0000;">1.09</span><span style="color: #949494;">e</span>+0  0.661  0.782 -<span style="color: #BB0000;">2.05</span><span style="color: #949494;">e</span>+0 -<span style="color: #BB0000;">1.13</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 1.00     64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> strata_raw[8]  2.03<span style="color: #949494;">e</span>+0  2.10<span style="color: #949494;">e</span>+0  0.441  0.462  1.33<span style="color: #949494;">e</span>+0  2.76<span style="color: #949494;">e</span>+0 0.975    64.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> strata_raw[9] -<span style="color: #BB0000;">9.75</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> -<span style="color: #BB0000;">9.43</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  0.358  0.356 -<span style="color: #BB0000;">1.52</span><span style="color: #949494;">e</span>+0 -<span style="color: #BB0000;">5.18</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> 0.988    57.7</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 9,956 more rows, 1 more variable: ess_tail &lt;dbl&gt;, and abbreviated</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   variable name ¹​ess_bulk</span></span></span></code></pre></div>
   </main>
 </div>
 

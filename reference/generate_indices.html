@@ -32,10 +32,11 @@ species, and to estimate trends."><meta property="og:image" content="http://stef
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -92,54 +93,56 @@ species, and to estimate trends.</p>
 
 
 <dt>quantiles</dt>
-<dd><p>vector of quantiles to be sampled from the posterior
-distribution Defaults to c(0.025,0.05,0.25,0.5,0.75,0.95,0.975)</p></dd>
+<dd><p>Numeric. Vector of quantiles to be sampled from the
+posterior distribution. Default is
+<code>c(0.025, 0.05, 0.25, 0.5, 0.75, 0.95, 0.975)</code>. Note that these quantiles
+will be used to create confidence interval bands in <code><a href="plot_indices.html">plot_indices()</a></code> and
+by quantiles in <code><a href="generate_trends.html">generate_trends()</a></code>, so make sure you specify the ones you
+want to use later in this step.</p></dd>
 
 
 <dt>regions</dt>
-<dd><p>vector selecting regional compilation(s) to calculate. Default
-is "continent" and "stratum". Options also include "country", "prov_state",
-"bcr", and "bcr_by_country" for the stratifications that include areas that
-align with those regions.</p></dd>
+<dd><p>Character. Which region(s) to summarize and calculate indices
+for. Default is "continent" and "stratum". Options also include "country",
+"prov_state", "bcr", and "bcr_by_country". Note that some regions only
+apply to specific stratifications. You can also supply a custom region that
+exists as a column in the <code>regions_index</code> data frame (see
+examples for more details).</p></dd>
 
 
 <dt>regions_index</dt>
-<dd><p>Data frame. Index of how strata line up with regions.</p></dd>
+<dd><p>Data frame. Custom regions to summarize. Data frame must
+include all strata in the original data in one column (<code>strata_name</code>), and
+any custom regions defined as categories in other columns.</p></dd>
 
 
 <dt>alternate_n</dt>
-<dd><p>text string indicating the name of the alternative annual
+<dd><p>Character. Indicating the name of the alternative annual
 index parameter in a model, Default is "n", alternatives are "n2" which
-involves a different way of scaling the annual indices, "nsmooth" for the
+involves a different way of scaling the annual indices, "n_smooth" for the
 gam and gamye models which show only the smooth component of the
-trajectory, and "nslope" for the slope models which track only the linear
-slope component of the model</p></dd>
+trajectory, and "n_slope" for the slope models which track only the linear
+slope component of the model.</p></dd>
 
 
 <dt>start_year</dt>
-<dd><p>Optional first year for which to calculate the annual
-indices if a trajectory for only the more recent portion of the time series
-is desired. This is probably most relevant if max_backcast is set and so
-trajectories for different time-periods could include a different subset of
-strata (i.e., strata removed)</p></dd>
+<dd><p>Numeric. Trim the data record before calculating annual
+indices.</p></dd>
 
 
 <dt>drop_exclude</dt>
-<dd><p>logical indicating if the strata that exceed the
-max_backcast threshold should be excluded from the calculations, Default is
-FALSE (regions are flagged and listed but not dropped)</p></dd>
+<dd><p>Logical. Whether or not strata that exceed the
+<code>max_backcast</code> threshold should be excluded from the calculations. Default
+is <code>FALSE</code> (regions are flagged and listed but not dropped).</p></dd>
 
 
 <dt>max_backcast</dt>
-<dd><p>an optional integer indicating the maximum number of
-years to backcast the stratum-level estimates before the first year in
-which the species was observed on any route in that stratum. 5 is used in
-the CWS national estimates. If the observed data in a given stratum do not
-include at least one non-zero observation of the species between the first
-year of the BBS and start_year+max_backcast, the stratum is flagged within
-the relevant regional summary. Default value, NULL ignores any backcasting
-limit (i.e., generates annual indices for the entire time series,
-regardless of when the species was first observed)</p></dd>
+<dd><p>Numeric. The number of years to back cast stratum-level
+estimates before the first year that species was observed on any route in
+that stratum. Default is <code>NULL</code>, which generates annual indices for the
+entire time series and ignores back-casting. CWS national estimates use a
+back cast of 5. Note that unless <code>drop_exclude = TRUE</code>, problematic years
+are only flagged, not omitted. See Details for more specifics.</p></dd>
 
 
 <dt>quiet</dt>
@@ -166,152 +169,93 @@ regardless of when the species was first observed)</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>List of 6 objects</p>
-<dl><dt>data_summary</dt>
-<dd><p>dataframe with the following columns</p></dd>
-
-<dt>Year</dt>
-<dd><p>Year of particular index</p></dd>
-
-<dt>Region</dt>
-<dd><p>Region name</p></dd>
-
-<dt>Region_alt</dt>
-<dd><p>Long name for region</p></dd>
-
-<dt>Region_type</dt>
-<dd><p>Type of region including continental, national,Province_State,BCR, bcr_by_country, or stratum</p></dd>
-
-<dt>Strata_included</dt>
-<dd><p>Strata included in the annual index calculations</p></dd>
-
-<dt>Strata_excluded</dt>
-<dd><p>Strata potentially excluded from the annual index calculations because they have no observations of the species in the first part of the time series, see arguments max_backcast and start_year</p></dd>
-
-<dt>Index</dt>
-<dd><p>Strata-weighted count index</p></dd>
-
-<dt>additional columns for each of the values in quantiles</dt>
-<dd><p>quantiles of the posterior distribution</p></dd>
-
-<dt>obs_mean</dt>
-<dd><p>Mean of the observed annual counts of birds across all routes and all years. An alternative estimate of the average relative abundance of the species in the region and year. Differences between this and the annual indices are a function of the model. For composite regions (i.e., anything other than stratum-level estimates) this average count is calculated as an area-weighted average across all strata included</p></dd>
-
-<dt>nrts</dt>
-<dd><p>Number of BBS routes that contributed data for this species, region, and year</p></dd>
-
-<dt>nrts_total</dt>
-<dd><p>Number of BBS routes that contributed data for this species and region for all years in the selected time-series, i.e., all years since <code>start_year</code></p></dd>
-
-<dt>nnzero</dt>
-<dd><p>Number of BBS routes on which this species was observed (i.e., count is &gt; 0) in this region and year</p></dd>
-
-<dt>backcast_flag</dt>
-<dd><p>approximate annual average proportion of the covered species range that is free of extrapolated population trajectories. e.g., 1.0 = data cover full time-series, 0.75 = data cover 75 percent of time-series. Only calculated if max_backcast != NULL</p></dd>
+<p>A list containing the indices (<code>indices</code>), an array of posterior
+draws (<code>samples</code>), meta data for the analysis (<code>meta_data</code>), meta data for
+the strata (<code>meta_strata</code>) and prepared data counts from <code><a href="prepare_data.html">prepare_data()</a></code></p>
 
 
-<dt>samples</dt>
-<dd><p>array of all posterior draws</p></dd>
+<p>(<code>raw_data</code>).</p>
 
-<dt>area-weights</dt>
-<dd><p>data frame of the strata names and area weights used to calculate the continental estimates</p></dd>
 
-<dt>y_min</dt>
-<dd><p>first year used in the summary, scale 1:length of time-series</p></dd>
-
-<dt>y_max</dt>
-<dd><p>last year used in the summary, scale 1:length of time-series</p></dd>
-
-<dt>start_year</dt>
-<dd><p>first year used in the summary, scale 1966:2018</p></dd>
-
-</dl></div>
+<p><code>indices</code> is a data frame with the following columns:</p><ul><li><p><code>year</code> - Year of particular index</p></li>
+<li><p><code>region</code> - Region name</p></li>
+<li><p><code>region_type</code> - Type of region</p></li>
+<li><p><code>strata_included</code> - Strata <em>potentially</em> included in the annual index
+calculations</p></li>
+<li><p><code>strata_excluded</code> - Strata <em>potentially</em> excluded from the annual index
+calculations because they have no observations of the species in the first
+part of the time series, see arguments <code>max_backcast</code> and <code>start_year</code></p></li>
+<li><p><code>index</code> - Strata-weighted count index (median)</p></li>
+<li><p><code>index_q_XXX</code> - Strata-weighted count index (by different quantiles)</p></li>
+<li><p><code>obs_mean</code> - Mean observed annual counts of birds across all routes and
+all years. An alternative estimate of the average relative abundance of the
+species in the region and year. Differences between this and the annual
+indices are a function of the model. For composite regions (i.e., anything
+other than stratum-level estimates) this average count is calculated as an
+area-weighted average across all strata included</p></li>
+<li><p><code>n_routes</code> - Number of BBS routes that contributed data for this species,
+region, and year</p></li>
+<li><p><code>n_routes_total</code> - Number of BBS routes that contributed data for this
+species and region for all years in the selected time-series, i.e., all
+years since <code>start_year</code></p></li>
+<li><p><code>n_non_zero</code> - Number of BBS routes on which this species was observed
+(i.e., count is &gt; 0) in this region and year</p></li>
+<li><p><code>backcast_flag</code> - Approximate annual average proportion of the covered
+species range that is free of extrapolated population trajectories. e.g.,
+if 1.0, data cover full time-series; if 0.75, data cover 75 percent of
+time-series. Only calculated if <code>max_backcast != NULL</code>.</p></li>
+</ul><p><code>meta_data</code> is a list passed from <code><a href="run_model.html">run_model()</a></code>, now including <code>start_year</code>,
+the first year used in the summary.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p><code>max_backcast</code> is a way to deal with the fact that the species of interest
+may not appear in the data until several years after the start of the
+record. <code>max_backcast</code> specifies how many years can occur before the
+stratum is flagged. A <code>max_backcast</code> of 5 will flag any stratum without a
+non-zero (or non-NA) observation within the first 5 years of the data
+record. Note that records are <em>only</em> flagged unless <code>drop_exclude = TRUE</code>.
+If you find that the early data record is sparse and results in the
+exclusion of many strata, consider trimming the early years by specifying a
+<code>start_year</code>.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Toy example with Pacific Wren sample data</span></span></span>
-<span class="r-in"><span><span class="co"># First, stratify the sample data</span></span></span>
-<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, sample_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using sample BBS data...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using species Pacific Wren (sample data)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Prepare the stratified data for use in modelling</span></span></span>
-<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_data.html">prepare_data</a></span><span class="op">(</span><span class="va">s</span>,</span></span>
-<span class="r-in"><span>                  min_year <span class="op">=</span> <span class="fl">2009</span>,</span></span>
-<span class="r-in"><span>                  max_year <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Now run the model (fast but not good, just for illustration)</span></span></span>
-<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="run_model.html">run_model</a></span><span class="op">(</span><span class="va">d</span>, model <span class="op">=</span> <span class="st">"first_diff"</span>,</span></span>
-<span class="r-in"><span>               iter_sampling <span class="op">=</span> <span class="fl">20</span>, iter_warmup <span class="op">=</span> <span class="fl">20</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Running MCMC with 2 chains, at most 4 in parallel...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 WARNING: There aren't enough warmup iterations to fit the </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          three stages of adaptation as currently configured. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          Reducing each adaptation stage to 15%/75%/10% of </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          the given number of warmup iterations: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            init_buffer = 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            adapt_window = 15 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            term_buffer = 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration:  1 / 40 [  2%]  (Warmup) </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 WARNING: There aren't enough warmup iterations to fit the </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          three stages of adaptation as currently configured. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          Reducing each adaptation stage to 15%/75%/10% of </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          the given number of warmup iterations: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            init_buffer = 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            adapt_window = 15 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            term_buffer = 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration:  1 / 40 [  2%]  (Warmup) </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 40 / 40 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 31.2 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 40 / 40 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 32.7 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Both chains finished successfully.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 32.0 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 32.8 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving model output to /home/runner/work/bbsBayes/bbsBayes/docs/reference/BBS_STAN_first_diff_hier_2022-11-17_01.rds</span>
+<span class="r-in"><span><span class="co"># Using the example model for Pacific Wrens</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate the continental and stratum indices</span></span></span>
-<span class="r-in"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu">generate_indices</span><span class="op">(</span>model_output <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu">generate_indices</span><span class="op">(</span><span class="va">pacific_wren_model</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region stratum</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region continent</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Generate only country indices</span></span></span>
-<span class="r-in"><span><span class="va">i_nat</span> <span class="op">&lt;-</span> <span class="fu">generate_indices</span><span class="op">(</span>model_output <span class="op">=</span> <span class="va">m</span>, regions <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">i_nat</span> <span class="op">&lt;-</span> <span class="fu">generate_indices</span><span class="op">(</span><span class="va">pacific_wren_model</span>, regions <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region country</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use a custom region specification (dummy example)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
+<span class="r-in"><span><span class="va">ri</span> <span class="op">&lt;-</span> <span class="va">bbs_strata</span><span class="op">[[</span><span class="st">"bbs_cws"</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">ri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">ri</span>, my_region <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">prov_state</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"ON"</span>,</span></span>
+<span class="r-in"><span>                                     <span class="st">"Ontario"</span>, <span class="st">"Rest"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate indices with these custom regions</span></span></span>
+<span class="r-in"><span><span class="va">i_custom</span> <span class="op">&lt;-</span> <span class="fu">generate_indices</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">pacific_wren_model</span>,</span></span>
+<span class="r-in"><span>  regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"country"</span>, <span class="st">"prov_state"</span>, <span class="st">"my_region"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  regions_index <span class="op">=</span> <span class="va">ri</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region country</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region prov_state</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region my_region</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

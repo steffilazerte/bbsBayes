@@ -28,10 +28,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -66,6 +67,7 @@
 <span>  <span class="va">prepped_data</span>,</span>
 <span>  <span class="va">model</span>,</span>
 <span>  model_variant <span class="op">=</span> <span class="st">"hier"</span>,</span>
+<span>  model_file <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  spatial_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  heavy_tailed <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  n_knots <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -81,9 +83,10 @@
 <span>  iter_sampling <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  adapt_delta <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  max_treedepth <span class="op">=</span> <span class="fl">14</span>,</span>
-<span>  init_def <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out_dir <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  init <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  init_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  output_basename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  output_dir <span class="op">=</span> <span class="st">"."</span>,</span>
 <span>  save_output <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">jags_data</span>,</span>
@@ -106,21 +109,23 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>prepped_data</dt>
-<dd><p>List. Output of <code><a href="prepare_data.html">prepare_data()</a></code>.</p>
-<p>Use <code>@inheritParams common_docs</code> to include the above in any function
-documentation with a matching argument (will only include matching args)</p></dd>
+<dd><p>List. Output of <code><a href="prepare_data.html">prepare_data()</a></code>.</p></dd>
 
 
 <dt>model</dt>
-<dd><p>Character. Type of model to run, must be one of "first_diff"
+<dd><p>Character. Type of model to use, must be one of "first_diff"
 (First Differences), "gam" (General Additive Model), "gamye" (General
 Additive Model with Year Effect), or "slope" (Slope model).</p></dd>
 
 
 <dt>model_variant</dt>
-<dd><p>Character. Model variant to run, must be one of
+<dd><p>Character. Model variant to use, must be one of
 "nonhier" (Non-hierarchical), "hier" (Hierarchical), or "spatial"
 (Spatially explicit).</p></dd>
+
+
+<dt>model_file</dt>
+<dd><p>Character. Location of a custom Stan model file to use.</p></dd>
 
 
 <dt>spatial_data</dt>
@@ -131,7 +136,8 @@ Additive Model with Year Effect), or "slope" (Slope model).</p></dd>
 <dd><p>Logical. Whether extra-Poisson error distributions should
 be modelled as a t-distribution, with heavier tails than the standard
 normal distribution. Default is <code>TRUE</code>. Recent results suggest this is best
-even though it requires much longer convergence times.</p></dd>
+even though it requires much longer convergence times. Can only be used
+with Negative Binomial models (i.e. <code>use_pois = FALSE</code>).</p></dd>
 
 
 <dt>n_knots</dt>
@@ -148,68 +154,89 @@ parameters and their precision.</p></dd>
 
 
 <dt>use_pois</dt>
-<dd><p>Logical.</p></dd>
+<dd><p>Logical. Whether to use an Over-Dispersed Poisson model
+(<code>TRUE</code>) or an Negative Binomial model (<code>FALSE</code>, default).</p></dd>
 
 
 <dt>calculate_nu</dt>
-<dd><p>Logical.</p></dd>
+<dd><p>Logical. Whether to calculate the <code>nu</code> parameter as
+a factor of <code>gamma(2, 0.1)</code>. Default is <code>FALSE</code>.</p></dd>
 
 
 <dt>calculate_log_lik</dt>
-<dd><p>Logical.</p></dd>
+<dd><p>Logical. Whether to calculate point-wise
+log-likelihood of the data given the model. Default is <code>FALSE</code>.</p></dd>
 
 
 <dt>calculate_CV</dt>
-<dd><p>Logical.</p></dd>
+<dd><p>Logical. Whether to use cross validation.</p></dd>
 
 
 <dt>refresh</dt>
-<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample</a></code>. Number of iterations
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. Number of iterations
 between screen updates. If 0, only errors are shown.</p></dd>
 
 
 <dt>chains</dt>
-<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample</a></code>. Number of Markov chains
-to run.</p></dd>
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. Number of Markov
+chains to run.</p></dd>
 
 
 <dt>parallel_chains</dt>
-<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample</a></code>. Maximum number
-of chains to run in parallel.</p></dd>
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. Maximum
+number of chains to run in parallel.</p></dd>
 
 
 <dt>iter_warmup</dt>
-<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample</a></code>. Number of warmup
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. Number of warmup
 iterations per chain.</p></dd>
 
 
 <dt>iter_sampling</dt>
-<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample</a></code>. Number of
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. Number of
 sampling (post-warmup) iterations per chain.</p></dd>
 
 
 <dt>adapt_delta</dt>
-<dd><p>Numeric.</p></dd>
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. The adaptation
+target acceptance statistic.</p></dd>
 
 
 <dt>max_treedepth</dt>
-<dd><p>Numeric.</p></dd>
+<dd><p>Numeric. Passed to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. The maximum
+allowed tree depth for the NUTS engine. See <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">?cmdstanr::sample</a></code>.</p></dd>
 
 
-<dt>init_def</dt>
-<dd><p>List.</p></dd>
+<dt>init</dt>
+<dd><p>(multiple options). An initialization method passed to the <code>init</code>
+argument of <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. See ?cmdstanr::sample for more details.
+The default (<code>NULL</code>) is for bbsBayes to supply initial parameter values
+according to model and model variant selected.</p></dd>
 
 
-<dt>out_name</dt>
-<dd><p>Character.</p></dd>
+<dt>init_only</dt>
+<dd><p>Logical. Whether to return the list of initial parameter
+values only (and not run the model). This is useful if you wish to see
+which <code>init</code> parameters are being supplied.</p></dd>
 
 
-<dt>out_dir</dt>
-<dd><p>Character.</p></dd>
+<dt>output_basename</dt>
+<dd><p>Character. Name of the files created as part of the
+Stan model run and the final model output RDS file if <code>save_output = TRUE</code>.</p></dd>
+
+
+<dt>output_dir</dt>
+<dd><p>Character. Directory in which all model files will be
+created.</p></dd>
+
+
+<dt>save_output</dt>
+<dd><p>Logical. Whether or not to save the model output to file
+as an RDS object with all required data. Defaults to <code>TRUE</code>.</p></dd>
 
 
 <dt>quiet</dt>
-<dd><p>Logical</p></dd>
+<dd><p>Logical. Suppress progress messages? Default <code>FALSE</code></p></dd>
 
 
 <dt>jags_data</dt>
@@ -265,23 +292,126 @@ sampling (post-warmup) iterations per chain.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Other arguments passed on to cmdstanr::sample</p></dd>
+<dd><p>Other arguments passed on to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code></p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>A list containing the model output (<code>model_fit</code>), meta data for the
+analysis (<code>meta_data</code>), meta data for the strata (<code>meta_strata</code>) and
+prepared data counts from <code><a href="prepare_data.html">prepare_data()</a></code> (<code>raw_data</code>).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>There are two ways you can customize
+the model run. The first is to supply a custom <code>model_file</code> created with the
+<code><a href="model_to_file.html">model_to_file()</a></code> function and then edited by hand.</p>
+<p>Second, you can supply a custom list of initialization parameters. You can
+supply these parameters in anyway that <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code> accepts the
+<code>init</code> argument. One way is to use the bbsBayes created parameters and modify
+them as needed. To do this, setup the <code>run_model()</code> function as you would
+normally use it, but add <code>init_only = TRUE</code>. This will return the list of
+initial definitions. You can edit this list and then run your model with
+<code>run_model(... init = new_inits)</code>.</p>
+<p>See the <a href="https://steffilazerte.ca/bbsBayes/articles/models.html" class="external-link">models article</a> for more
+advanced examples and explanations.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, sample_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using sample BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using species Pacific Wren (sample data)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_data.html">prepare_data</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># You can also specify the GAM model, with an optional number of</span></span></span>
-<span class="r-in"><span><span class="co"># knots to use for the GAM basis.</span></span></span>
-<span class="r-in"><span><span class="co"># By default, the number of knots will be equal to the floor</span></span></span>
-<span class="r-in"><span><span class="co"># of the total unique years for the species / 4</span></span></span>
-<span class="r-in"><span><span class="co">#model_data &lt;- prepare_data(strat_data,</span></span></span>
-<span class="r-in"><span><span class="co">#                           model = "gam",</span></span></span>
-<span class="r-in"><span><span class="co">#                           n_knots = 9)</span></span></span>
+<span class="r-in"><span><span class="co"># Run model (quick and dirty)</span></span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">run_model</span><span class="op">(</span><span class="va">p</span>, model <span class="op">=</span> <span class="st">"first_diff"</span>, model_variant <span class="op">=</span> <span class="st">"hier"</span>,</span></span>
+<span class="r-in"><span>               iter_warmup <span class="op">=</span> <span class="fl">20</span>, iter_sampling <span class="op">=</span> <span class="fl">20</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Running MCMC with 2 chains, at most 4 in parallel...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 WARNING: There aren't enough warmup iterations to fit the </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          three stages of adaptation as currently configured. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          Reducing each adaptation stage to 15%/75%/10% of </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          the given number of warmup iterations: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            init_buffer = 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            adapt_window = 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            term_buffer = 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration:  1 / 40 [  2%]  (Warmup) </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is inf, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 WARNING: There aren't enough warmup iterations to fit the </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          three stages of adaptation as currently configured. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          Reducing each adaptation stage to 15%/75%/10% of </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          the given number of warmup iterations: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            init_buffer = 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            adapt_window = 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            term_buffer = 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration:  1 / 40 [  2%]  (Warmup) </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 40 / 40 [100%]  (Sampling) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 113.5 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 40 / 40 [100%]  (Sampling) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 117.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Both chains finished successfully.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 115.3 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 117.4 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving model output to /home/runner/work/bbsBayes/bbsBayes/docs/reference/BBS_STAN_first_diff_hier_2022-12-09_01.rds</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># Clean up (remove model files)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"BBS_STAN_first_diff_hier_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

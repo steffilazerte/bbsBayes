@@ -52,10 +52,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -95,9 +96,11 @@
 <div class="section level2">
 <h2 id="install-cmdstanr">Install <a href="https://mc-stan.org/cmdstanr/" class="external-link">cmdstanr</a><a class="anchor" aria-label="anchor" href="#install-cmdstanr"></a>
 </h2>
+<p>It is recommended to run this is a fresh R session or restart your
+current session</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># we recommend running this is a fresh R session or restarting your current session</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cmdstanr"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://mc-stan.org/r-packages/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cmdstanr"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://mc-stan.org/r-packages/"</span>, </span>
+<span>                                       <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="install-cmdstan">Install cmdstan<a class="anchor" aria-label="anchor" href="#install-cmdstan"></a>
@@ -118,15 +121,15 @@ Started</a>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cmdstanr</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/set_cmdstan_path.html" class="external-link">cmdstan_path</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/home/runner/.cmdstan/cmdstan-2.30.1"</span></span>
+<span><span class="co">#&gt; [1] "/home/runner/.cmdstan/cmdstan-2.31.0"</span></span>
 <span><span class="fu">cmdstanr</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/cmdstanr/reference/set_cmdstan_path.html" class="external-link">cmdstan_version</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2.30.1"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2.31.0"</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BrandonEdwards/bbsBayes" class="external-link">bbsBayes</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; bbsBayes v3.0.0</span></span>
 <span><span class="co">#&gt; Note: version 3+ represents a major shift in functionality, noteably:</span></span>
-<span><span class="co">#&gt;  - The underlying Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
-<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in many deprecated/renamed</span></span>
+<span><span class="co">#&gt;  - The Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
+<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in deprecated/renamed</span></span>
 <span><span class="co">#&gt;    function arguments</span></span>
 <span><span class="co">#&gt; See the documentation for more details: https://BrandonEdwards.github.io/bbsBayes</span></span></code></pre></div>
 </div>

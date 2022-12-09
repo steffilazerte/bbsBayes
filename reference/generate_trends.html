@@ -34,10 +34,11 @@ in population size for composite regions."><meta property="og:image" content="ht
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -135,78 +136,69 @@ optionally calculate the posterior probabilities (see Details). Default is
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Data frame with one row for each region included in the starting <code>indices</code> object. Contains <code>start_year</code>, <code>end_year</code>, <code>region</code>, <code>region-alt</code>, <code>region_type</code>,
-<code>strata_included</code>, <code>strata_excluded</code></p>
-<dl><dt>Start_year</dt>
-<dd><p>first year of the trend</p></dd>
+<p>A list containing the trends (<code>trends</code>), meta data for the analysis
+(<code>meta_data</code>), meta data for the strata (<code>meta_strata</code>) and prepared data
+counts from <code><a href="prepare_data.html">prepare_data()</a></code> (<code>raw_data</code>).</p>
 
-<dt>End_year</dt>
-<dd><p>last year of the trend</p></dd>
 
-<dt>Region</dt>
-<dd><p>short name of the region</p></dd>
-
-<dt>Region_alt</dt>
-<dd><p>Long name for region</p></dd>
-
-<dt>Region_type</dt>
-<dd><p>Type of region including continental, national,Province_State,BCR, bcr_by_national, or stratum</p></dd>
-
-<dt>Strata_included</dt>
-<dd><p>Strata included in the trend and annual index calculations</p></dd>
-
-<dt>Strata_excluded</dt>
-<dd><p>Strata potentially excluded from the trend and annual index calculations because they have no observations of the species in the first part of the time series</p></dd>
-
-<dt>Trend</dt>
-<dd><p>Estimated mean annual percent change over the trend time-period (i.e., Start_year - End_year), according to an endpoint comparison of annual index in Start_year and the annual index in End_year</p></dd>
-
-<dt>Trend_Q_quantiles</dt>
-<dd><p>quantiles of the posterior distribution of Trend estimates, matching levels included in the quantiles argument</p></dd>
-
-<dt>Percent_Change</dt>
-<dd><p>Estimated total percent change over the trend time-period</p></dd>
-
-<dt>Percent_Change_Q_quantiles</dt>
-<dd><p>quantiles of the posterior distribution of Percent Change estimates, matching levels included in the quantiles argument</p></dd>
-
-<dt>Slope_Trend</dt>
-<dd><p>Estimated mean annual percent change over the trend time-period, according to the slope of a linear regression through the log-transformed annual indices</p></dd>
-
-<dt>Slope_Trend_Q_quantiles</dt>
-<dd><p>quantiles of the posterior distribution of Percent Change estimates, matching levels included in the quantiles argument</p></dd>
-
-<dt>prob_decrease_X_percent</dt>
-<dd><p>proportion of the posterior distribution of Percent_Change that is below the percentage values supplied in prob_decrease</p></dd>
-
-<dt>prob_increase_X_percent</dt>
-<dd><p>proportion of the posterior distribution of Percent_Change that is above the percentage values supplied in prob_increase</p></dd>
-
-<dt>Relative_Abundance</dt>
-<dd><p>Mean of the annual index values across all years. An estimate of the average relative abundance of the species in the region. Can be interepreted as the predicted average count of the species in an average year on an average route by an average observer, for the years, routes, and observers in the existing data</p></dd>
-
-<dt>Observed_Relative_Abundance</dt>
-<dd><p>Mean of the observed annual counts of birds across all routes and all years. An alternative estimate of the average relative abundance of the species in the region. For composite regions (i.e., anything other than stratum-level estimates) this average count is calculated as an area-weighted average across all strata included</p></dd>
-
-<dt>Number_of_Strata</dt>
-<dd><p>The number of strata included in the region</p></dd>
-
-<dt>Width_of_X_percent_Credible_Interval</dt>
-<dd><p>Width (in percent/year) of the credible interval on the Trend calculation. Calculated for the widest credible interval requested in quantiles argument. Default is 95 percent CI (i.e., Trend_Q0.975 - Trend_Q0.025)</p></dd>
-
-<dt>Width_of_X_percent_Credible_Interval_Slope</dt>
-<dd><p>Width (in percent/year) of the credible interval on the Trend calculation for the slope-based trend. Calculated for the widest credible interval requested in quantiles argument. Default is 95 percent CI (i.e., Slope_Trend_Q0.975 - Slope_Trend_Q0.025)</p></dd>
-
-<dt>Number_of_Routes</dt>
-<dd><p>The number of unique BBS routes included in the annual indices for this region and species, i.e., number of routes for this region and species for the years since <code>generate_indices(startyear)</code></p></dd>
-
-<dt>Mean_Number_of_Routes</dt>
-<dd><p>The average number of BBS routes across years contributing data for this region and species</p></dd>
-
-<dt>backcast_flag</dt>
-<dd><p>approximate proportion of the included species range*years that are supported by data in a given region and year, e.g., 1.0 = data cover full time-series, 0.75 = data cover 75 percent of time-series. Only calculated if max_backcast != NULL</p></dd>
-
-</dl></div>
+<p><code>trends</code> is a data frame with one row for each region in the input
+<code>indices</code>. It has the following columns:</p><ul><li><p><code>start_year</code> - First year of the trend</p></li>
+<li><p><code>end_year</code> - Last year of the trend</p></li>
+<li><p><code>region</code> - Region name</p></li>
+<li><p><code>region_type</code> - Type of region</p></li>
+<li><p><code>strata_included</code> - Strata <em>potentially</em> included in the annual index
+calculations</p></li>
+<li><p><code>strata_excluded</code> - Strata <em>potentially</em> excluded from the annual index
+calculations because they have no observations of the species in the first
+part of the time series, see arguments <code>max_backcast</code> and <code>start_year</code></p></li>
+<li><p><code>trend</code> - Estimated median annual percent change over the trend
+time-period according to end point comparison of annual indices for the
+<code>start_year</code> and the <code>end_year</code></p></li>
+<li><p><code>trend_q_XXX</code> - Trend estimates by different quantiles</p></li>
+<li><p><code>percent_change</code> - Median overall estimate percent change over the trend
+time-period</p></li>
+<li><p><code>percent_change_q_XXX</code> - Percent change by different quantiles</p></li>
+<li><p><code>slope_trend</code> - Estimated median annual percent change over the trend
+time-period, according to the slope of a linear regression through the
+log-transformed annual indices. (Only if <code>slope = TRUE</code>)</p></li>
+<li><p><code>slope_trend_q_XXX</code> - Slope-based trend estimates by different quantiles.
+(Only if <code>slope = TRUE</code>)</p></li>
+<li><p><code>width_of_95_percent_credible_interval</code> - Width (in percent/year) of the
+credible interval on the trend calculation. Calculated for the widest
+credible interval requested in via <code>quantiles</code>. Default is 95 percent CI
+(i.e., <code>trend_q_0.975</code> - <code>trend_q_0.025</code>)</p></li>
+<li><p><code>width_of_95_percent_credible_interval_slope</code> - Width (in percent/year)
+of the credible interval on the slope-based trend calculation. Calculated
+for the widest credible interval requested in via <code>quantiles</code>. Default is
+95 percent CI (i.e., <code>slope_trend_q_0.975</code> - <code>slope_trend_q_0.025</code>). (Only
+if <code>slope = TRUE</code>)</p></li>
+<li><p><code>prob_decrease_XX_percent</code> - Proportion of the posterior distribution of
+<code>percent_change</code> that is below the percentage values in
+<code>prob_decrease</code> (if non-<code>Null</code>)</p></li>
+<li><p><code>prob_increase_XX_percent</code> - Proportion of the posterior distribution of
+<code>percent_change</code> that is above tthe percentage values in
+<code>prob_increase</code> (if non-<code>Null</code>)</p></li>
+<li><p><code>rel_abundance</code> - Mean annual index value across all years. An estimate
+of the average relative abundance of the species in the region. Can be
+interpreted as the predicted average count of the species in an average
+year on an average route by an average observer, for the years, routes, and
+observers in the existing data</p></li>
+<li><p><code>obs_rel_abundance</code> - Mean observed annual count of birds across all
+routes and all years. An alternative estimate of the average relative
+abundance of the species in the region. For composite regions (i.e.,
+anything other than stratum-level estimates) this average count is
+calculated as an area-weighted average across all strata included.</p></li>
+<li><p><code>n_routes</code> - Number of BBS routes that contributed data for this
+species and region for all years in the selected time-series, i.e., all
+years since <code>start_year</code></p></li>
+<li><p><code>mean_n_routes</code> - Mean number of BBS routes that contributed data for
+this species, region, and year</p></li>
+<li><p><code>n_strata_included</code> - The number of strata included in the region</p></li>
+<li><p><code>backcast_flag</code> - Approximate annual average proportion of the covered
+species range that is free of extrapolated population trajectories. e.g.,
+if 1.0, data cover full time-series; if 0.75, data cover 75 percent of
+time-series. Only calculated if <code>max_backcast != NULL</code>.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The posterior probabilities can be calculated for a percent-decrease
@@ -224,72 +216,10 @@ less than half of the population remains) over the period of the trend.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Toy example with Pacific Wren sample data</span></span></span>
-<span class="r-in"><span><span class="co"># First, stratify the sample data</span></span></span>
-<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, sample_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using sample BBS data...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using species Pacific Wren (sample data)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span><span class="co"># Using the example model for Pacific Wrens...</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Prepare the stratified data for use in a JAGS model.</span></span></span>
-<span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_data.html">prepare_data</a></span><span class="op">(</span><span class="va">s</span>, min_year <span class="op">=</span> <span class="fl">2009</span>, max_year <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Now run the model (fast but not good, just for illustration)</span></span></span>
-<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="run_model.html">run_model</a></span><span class="op">(</span><span class="va">d</span>, model <span class="op">=</span> <span class="st">"first_diff"</span>,</span></span>
-<span class="r-in"><span>               iter_sampling <span class="op">=</span> <span class="fl">5</span>, iter_warmup <span class="op">=</span> <span class="fl">5</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Running MCMC with 2 chains, at most 4 in parallel...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 WARNING: No variance estimation is </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1          performed for num_warmup &lt; 20 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 1 / 10 [ 10%]  (Warmup) </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 WARNING: No variance estimation is </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2          performed for num_warmup &lt; 20 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 1 / 10 [ 10%]  (Warmup) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 6 / 10 [ 60%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 10 / 10 [100%]  (Sampling) </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 0.0 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 6 / 10 [ 60%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 10 / 10 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 0.4 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Both chains finished successfully.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 0.2 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 0.6 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Warning: 10 of 10 (100.0%) transitions ended with a divergence.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See https://mc-stan.org/misc/warnings for details.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Saving model output to /home/runner/work/bbsBayes/bbsBayes/docs/reference/BBS_STAN_first_diff_hier_2022-11-17_01.rds</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Generate the continental and stratum indices</span></span></span>
-<span class="r-in"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_indices.html">generate_indices</a></span><span class="op">(</span>model_output <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Generate the continental and stratum indices#'</span></span></span>
+<span class="r-in"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_indices.html">generate_indices</a></span><span class="op">(</span><span class="va">pacific_wren_model</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region stratum</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Processing region continent</span>
 <span class="r-in"><span></span></span>

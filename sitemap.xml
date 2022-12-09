@@ -37,6 +37,9 @@
     <loc>http://steffilazerte.ca/bbsBayes/articles/index.html</loc>
   </url>
   <url>
+    <loc>http://steffilazerte.ca/bbsBayes/articles/models.html</loc>
+  </url>
+  <url>
     <loc>http://steffilazerte.ca/bbsBayes/articles/models_first_diff_nonhier.html</loc>
   </url>
   <url>
@@ -79,19 +82,22 @@
     <loc>http://steffilazerte.ca/bbsBayes/reference/common_docs.html</loc>
   </url>
   <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/convergence.html</loc>
-  </url>
-  <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/fetch_bbs_data.html</loc>
-  </url>
-  <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/fetch_bbs_data_orig.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/generate_indices.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/generate_trends.html</loc>
+  </url>
+  <url>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/get_convergence.html</loc>
+  </url>
+  <url>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/get_model_vars.html</loc>
+  </url>
+  <url>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/get_summary.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/have_bbs_data.html</loc>
@@ -104,6 +110,9 @@
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/load_map.html</loc>
+  </url>
+  <url>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/model_to_file.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/pacific_wren_model.html</loc>

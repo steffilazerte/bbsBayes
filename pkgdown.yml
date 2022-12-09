@@ -3,13 +3,14 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   advanced: advanced.html
+  convergence: convergence.html
   custom_stratification: custom_stratification.html
+  models: models.html
   models_first_diff_nonhier: models_first_diff_nonhier.html
   workflow: workflow.html
   bbsBayes: bbsBayes.html
-  convergence: convergence.html
   stratification: stratification.html
-last_built: 2022-11-17T20:51Z
+last_built: 2022-12-09T22:06Z
 urls:
   reference: http://steffilazerte.ca/bbsBayes/reference
   article: http://steffilazerte.ca/bbsBayes/articles

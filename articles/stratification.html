@@ -52,10 +52,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -104,12 +105,12 @@ strata.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BrandonEdwards/bbsBayes" class="external-link">bbsBayes</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; bbsBayes v3.0.0</span></span>
 <span><span class="co">#&gt; Note: version 3+ represents a major shift in functionality, noteably:</span></span>
-<span><span class="co">#&gt;  - The underlying Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
-<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in many deprecated/renamed</span></span>
+<span><span class="co">#&gt;  - The Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
+<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in deprecated/renamed</span></span>
 <span><span class="co">#&gt;    function arguments</span></span>
 <span><span class="co">#&gt; See the documentation for more details: https://BrandonEdwards.github.io/bbsBayes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>       <span class="co"># Spatial data manipulations</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>    <span class="co"># General data manipulations</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -212,12 +213,12 @@ available from available from the US Fish and Wildlife Service
 Catalogue: <a href="https://ecos.fws.gov/ServCat/Reference/Profile/142628" class="external-link uri">https://ecos.fws.gov/ServCat/Reference/Profile/142628</a></p>
 <p>You can either download it by hand, or with the following code.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="st">"WBPHS_stratum_boundaries_2019.zip"</span></span>
+<code class="sourceCode R"><span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"https://ecos.fws.gov/ServCat/DownloadFile/213149"</span>,</span>
-<span>              destfile <span class="op">=</span> <span class="va">z</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code></pre></div>
+<span>              destfile <span class="op">=</span> <span class="va">t</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span></span></code></pre></div>
 <p>To use this file in bbsBayes, we need to load it as an sf object
 using the sf package.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">

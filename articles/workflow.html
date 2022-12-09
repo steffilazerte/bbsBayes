@@ -52,10 +52,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -96,8 +97,8 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BrandonEdwards/bbsBayes" class="external-link">bbsBayes</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; bbsBayes v3.0.0</span></span>
 <span><span class="co">#&gt; Note: version 3+ represents a major shift in functionality, noteably:</span></span>
-<span><span class="co">#&gt;  - The underlying Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
-<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in many deprecated/renamed</span></span>
+<span><span class="co">#&gt;  - The Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
+<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in deprecated/renamed</span></span>
 <span><span class="co">#&gt;    function arguments</span></span>
 <span><span class="co">#&gt; See the documentation for more details: https://BrandonEdwards.github.io/bbsBayes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/DiagrammeR" class="external-link">DiagrammeR</a></span><span class="op">)</span></span></code></pre></div>
@@ -128,7 +129,7 @@
 <span><span class="st">  plotind [label = 'plot_indices()']</span></span>
 <span><span class="st">  gentre [label = 'generate_trends()']</span></span>
 <span><span class="st">  geo [label = 'plot_geofacet()']</span></span>
-<span><span class="st">  genmap [label = 'plot__map()']</span></span>
+<span><span class="st">  genmap [label = 'plot_map()']</span></span>
 <span><span class="st">  </span></span>
 <span><span class="st"></span></span>
 <span><span class="st">  # several 'edge' statements</span></span>
@@ -155,8 +156,8 @@
 <span><span class="st">  gentre-&gt;geo [color=grey50]</span></span>
 <span><span class="st">  gentre-&gt;genmap</span></span>
 <span><span class="st">}"</span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-c5f2b230b54be26cb588" style="width:700px;height:432.632880098888px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c5f2b230b54be26cb588">{"x":{"diagram":"digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = rectangle, fontname = \"Courier New\", \n        fixedsize = false, style=filled, fillcolor=white]\n  fetch [label = \"fetch_bbs_data()\"]\n  remove [label = \"remove_bbs_data()\", fillcolor=pink]\n  loadbbs [label = \"load_bbs_data()\"]\n  \n  search [label = \"search_species()\", fillcolor=pink]\n  strat [label = \"stratify()\"]\n  prepdata [label = \"prepare_data()\"]\n  prepspatial [label = \"prepare_spatial()\", fillcolor=pink]\n  runmodel [label = \"run_model()\"]\n  savemodel [label = \"save_model_run()\", fillcolor=pink]\n  modelfile [label = \"model_to_file()\"]\n  loadmap [label = \"load_map()\"]\n  ps [label = \"assign_prov_state()\", fillcolor=pink]\n  genind [label = \"generate_indices()\"]\n  conv [label = \"convergence()\"]\n  plotind [label = \"plot_indices()\"]\n  gentre [label = \"generate_trends()\"]\n  geo [label = \"plot_geofacet()\"]\n  genmap [label = \"plot__map()\"]\n  \n\n  # several \"edge\" statements\n  edge []\n  fetch->remove [style=dashed]\n  fetch->loadbbs [style=dashed]\n  fetch->strat [style=dashed]\n  \n  search->strat [style=dashed, color=orange]\n  strat->prepdata\n  prepdata->prepspatial [color=grey50]\n  prepdata->runmodel\n  prepspatial->runmodel [color=grey50]\n  \n  runmodel->savemodel [color=grey50]\n  runmodel->conv\n  runmodel->genind\n  genind->gentre\n  \n  loadmap->ps->genind [color=orange]\n  loadmap->{strat prepspatial} [color=orange]\n  genind->plotind\n  genind->geo\n  gentre->geo [color=grey50]\n  gentre->genmap\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></main>
+<div id="htmlwidget-40407cbfaf0b8298144e" style="width:700px;height:432.632880098888px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-40407cbfaf0b8298144e">{"x":{"diagram":"digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = rectangle, fontname = \"Courier New\", \n        fixedsize = false, style=filled, fillcolor=white]\n  fetch [label = \"fetch_bbs_data()\"]\n  remove [label = \"remove_bbs_data()\", fillcolor=pink]\n  loadbbs [label = \"load_bbs_data()\"]\n  \n  search [label = \"search_species()\", fillcolor=pink]\n  strat [label = \"stratify()\"]\n  prepdata [label = \"prepare_data()\"]\n  prepspatial [label = \"prepare_spatial()\", fillcolor=pink]\n  runmodel [label = \"run_model()\"]\n  savemodel [label = \"save_model_run()\", fillcolor=pink]\n  modelfile [label = \"model_to_file()\"]\n  loadmap [label = \"load_map()\"]\n  ps [label = \"assign_prov_state()\", fillcolor=pink]\n  genind [label = \"generate_indices()\"]\n  conv [label = \"convergence()\"]\n  plotind [label = \"plot_indices()\"]\n  gentre [label = \"generate_trends()\"]\n  geo [label = \"plot_geofacet()\"]\n  genmap [label = \"plot_map()\"]\n  \n\n  # several \"edge\" statements\n  edge []\n  fetch->remove [style=dashed]\n  fetch->loadbbs [style=dashed]\n  fetch->strat [style=dashed]\n  \n  search->strat [style=dashed, color=orange]\n  strat->prepdata\n  prepdata->prepspatial [color=grey50]\n  prepdata->runmodel\n  prepspatial->runmodel [color=grey50]\n  \n  runmodel->savemodel [color=grey50]\n  runmodel->conv\n  runmodel->genind\n  genind->gentre\n  \n  loadmap->ps->genind [color=orange]\n  loadmap->{strat prepspatial} [color=orange]\n  genind->plotind\n  genind->geo\n  gentre->geo [color=grey50]\n  gentre->genmap\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></main>
 </div>
 
 

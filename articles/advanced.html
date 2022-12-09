@@ -52,10 +52,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -156,19 +157,23 @@ following will run MCMC with default number of iterations. Note that
 this step usually takes a long time (e.g., 6-12 hours, or even days
 depending on the species, model).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">prepped_data</span>, </span>
-<span>                 model <span class="op">=</span> <span class="st">"gamye"</span>,</span>
-<span>                 heavy_tailed <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                 iter_sampling <span class="op">=</span> <span class="fl">10</span>, iter_warmup <span class="op">=</span> <span class="fl">10</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds</a></span><span class="op">(</span><span class="va">mod</span>, <span class="st">"cws_bars_gamye.rds"</span><span class="op">)</span></span></code></pre></div>
-<p>Alternatively, you can set how many iterations for sampling or warmup
-steps, how many chains, and how many to run in parallel.</p>
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">prepped_data</span>, output_basename <span class="op">=</span> <span class="st">"cws_basw_gamye"</span>,</span>
+<span>                 model <span class="op">=</span> <span class="st">"gamye"</span>, heavy_tailed <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                 iter_sampling <span class="op">=</span> <span class="fl">10</span>, iter_warmup <span class="op">=</span> <span class="fl">10</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, you can set how many iterations for sampling or warm
+up steps, how many chains, and how many to run in parallel.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">prepped_data</span>,</span>
 <span>                 iter_sampling <span class="op">=</span> <span class="fl">2000</span>, iter_warmup <span class="op">=</span> <span class="fl">500</span>, </span>
 <span>                 chains <span class="op">=</span> <span class="fl">4</span>, parallel_chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/run_model.html">run_model()</a></code> function generates a large object that
-includes the posterior draws, convergence information, data, etc.</p>
+includes the posterior draws, convergence information, data, etc. By
+default, this a copy of this object is saved as an RDS file to your
+model directory (working directory unless <code>output_dir</code> is
+specified.</p>
+<p>You can load this in with</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"cws_basw_gamye.rds"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="convergence">Convergence<a class="anchor" aria-label="anchor" href="#convergence"></a>
@@ -185,18 +190,18 @@ not be necessary. If all or the vast majority of the n parameters have
 converged (e.g., you’re receiving this warning message for other
 monitored parameters), then inference on population trajectories and
 trends from the model are reliable.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jags_mod</span><span class="op">$</span><span class="va">n.eff</span> <span class="co">#shows the effective sample size for each monitored parameter</span></span>
 <span><span class="va">jags_mod</span><span class="op">$</span><span class="va">Rhat</span> <span class="co"># shows the Rhat values for each monitored parameter</span></span></code></pre></div>
 <p>If important monitored parameters have not converged, we recommend
 inspecting the model diagnostics with the package ggmcmc.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggmcmc"</span><span class="op">)</span></span>
 <span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu">ggmcmc</span><span class="fu">::</span><span class="fu">ggs</span><span class="op">(</span><span class="va">jags_mod</span><span class="op">$</span><span class="va">samples</span>,family <span class="op">=</span> <span class="st">"B.X"</span><span class="op">)</span> <span class="co">#samples object is an mcmc.list object</span></span>
 <span><span class="fu">ggmcmc</span><span class="fu">::</span><span class="fu">ggmcmc</span><span class="op">(</span><span class="va">S</span>,family <span class="op">=</span> <span class="st">"B.X"</span><span class="op">)</span> <span class="co">## this will output a pdf with a series of plots useful for assessing convergence. Be warned this function will be overwhelmed if trying to handle all of the n values from a BBS analysis of a broad-ranged species</span></span></code></pre></div>
 <p>bbsBayes also includes a function to help re-start an MCMC chain, so
 that you avoid having to wait for an additional burn-in period.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">### if jags_mod has failed to converge...</span></span>
 <span><span class="va">new_initials</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bbsBayes-defunct.html">get_final_values</a></span><span class="op">(</span><span class="va">jags_mod</span><span class="op">)</span></span>
 <span></span>
@@ -223,7 +228,7 @@ posterior predictions from the model.</p>
 abundance within a stratum (i.e., parameters
 <code>n[strata,year]</code>). The time-series of these annual indices
 form the estimated population trajectories.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_indices.html">generate_indices</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
 <p>By default, this function generates estimates for the continent
 (i.e., survey-wide) and for the individual strata. However, the user can
@@ -232,7 +237,7 @@ collections of strata), such as countries, provinces/states, Bird
 Conservation Regions, etc. For display, the posterior medians are used
 for annual indices (instead of the posterior means) due to the
 asymetrical distributions caused by the log-linear retransformation.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_indices.html">generate_indices</a></span><span class="op">(</span><span class="va">mod</span>,</span>
 <span>                            regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"continental"</span>,</span>
 <span>                                        <span class="st">"national"</span>,</span>
@@ -247,7 +252,7 @@ asymetrical distributions caused by the log-linear retransformation.</p>
 of abundance. The trends are expressed as geometric mean rates of change
 (%/year) between two points in time. <span class="math inline">\(Trend =
 (\frac {n[minyear]}{n[maxyear]})^{(1/(maxyear-minyear))}\)</span></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trends</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_trends.html">generate_trends</a></span><span class="op">(</span>indices <span class="op">=</span> <span class="va">indices</span>,  </span>
 <span>                          min_year <span class="op">=</span> <span class="fl">1970</span>,</span>
 <span>                          max_year <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span></span></code></pre></div>
@@ -264,7 +269,7 @@ arguments that allow the user to adjust the quantiles used to summarize
 uncertainty (e.g., interquartile range of the trend estiamtes, or the
 67% CIs), as well as include additional calculations, such as the
 probability a population has declined (or increased) by &gt; X%.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trends</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_trends.html">generate_trends</a></span><span class="op">(</span>indices <span class="op">=</span> <span class="va">indices</span>,</span>
 <span>                          min_year <span class="op">=</span> <span class="fl">1970</span>,</span>
 <span>                          max_year <span class="op">=</span> <span class="fl">2018</span>,</span>
@@ -282,7 +287,7 @@ probability a population has declined (or increased) by &gt; X%.</p>
 <code><a href="../reference/plot_indices.html">plot_indices()</a></code> function produces a list of ggplot figures
 that can be combined into a single pdf file, or printed to individual
 devices.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_indices.html">plot_indices</a></span><span class="op">(</span>indices <span class="op">=</span> <span class="va">indices</span>,</span>
 <span>                   add_observed_means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co"># pdf(file = "Barn Swallow Trajectories.pdf")</span></span>
@@ -290,7 +295,7 @@ devices.</p>
 <span><span class="co"># dev.off()</span></span>
 <span><span class="va">tp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p><img src="reference/figures/BARS_Continental_Trajectory.png"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p><img src="reference/figures/BARS_Canada_Trajectory.png"> etc.</p>
 </div>
@@ -299,7 +304,7 @@ devices.</p>
 </h3>
 <p>The trends can be mapped to produce strata maps coloured by species
 population trends.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_map.html">plot_map</a></span><span class="op">(</span><span class="va">trends</span>, col_viridis <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">mp</span></span></code></pre></div>
 <p><img src="reference/figures/BARS_trendmap.png"></p>
@@ -307,7 +312,7 @@ population trends.</p>
 <div class="section level3">
 <h3 id="geofacet-trajectories">Geofacet Trajectories<a class="anchor" aria-label="anchor" href="#geofacet-trajectories"></a>
 </h3>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_geofacet.html">plot_geofacet</a></span><span class="op">(</span>indices_list <span class="op">=</span> <span class="va">indices</span>,</span>
 <span>                    trends <span class="op">=</span> <span class="va">trends</span>,</span>
 <span>                    multiple <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -331,7 +336,7 @@ using a trajectory that removes the annual fluctuations around the
 smooth “n3”.</p>
 <p>The full script to run the CWS analysis for the 2018 BBS data version
 is accessible here: <a href="https://github.com/AdamCSmithCWS/BBS_Summaries" class="external-link uri">https://github.com/AdamCSmithCWS/BBS_Summaries</a></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">species.eng</span> <span class="op">=</span> <span class="st">"Pacific Wren"</span></span>
 <span></span>
 <span><span class="va">stratified_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span><span class="op">)</span> <span class="co">#same as USGS but with BCR7 as one stratum and PEI and Nova Scotia combined into one stratum</span></span>
@@ -364,7 +369,7 @@ Future analyses from the USGS will likely use the first difference model
 <p>NOTE: the USGS analysis is not run using the bbsBayes package, and so
 this analysis may not exactly replicate the published version. However,
 any variations should be very minor.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">species.eng</span> <span class="op">=</span> <span class="st">"Pacific Wren"</span></span>
 <span></span>
 <span><span class="va">stratified_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stratify.html">stratify</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_usgs"</span><span class="op">)</span> <span class="co">#BCR by province/state/territory intersections</span></span>
@@ -408,7 +413,7 @@ estimate bbs trends since 2011. The basic model was first described in
 and its application to the annual status and trend estimates is
 documented in Sauer and Link (2011; <a href="https://doi.org/10.1525/auk.2010.09220" class="external-link uri">https://doi.org/10.1525/auk.2010.09220</a>) and Smith et
 al. (2014; <a href="https://doi.org/10.22621/cfn.v128i2.1565" class="external-link uri">https://doi.org/10.22621/cfn.v128i2.1565</a>).</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="co">#stratified_data &lt;- stratify(by = "bbs_usgs")</span></span>
 <span>    </span>
 <span>    <span class="co">#jags_data_slope &lt;- prepare_jags_data(stratified_data, </span></span>
@@ -436,7 +441,7 @@ al. (2014; <a href="https://doi.org/10.22621/cfn.v128i2.1565" class="external-l
 <p>The gam option models the time series as a semiparametric smooth
 using a Generalized Additive Model (GAM) structure. See <a href="https://github.com/AdamCSmithCWS/Smith_Edwards_GAM_BBS" class="external-link uri">https://github.com/AdamCSmithCWS/Smith_Edwards_GAM_BBS</a>
 for more information (full publication coming soon)</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="co">#stratified_data &lt;- stratify(by = "bbs_usgs")</span></span>
 <span>    </span>
 <span>    <span class="co">#jags_data_gam &lt;- prepare_jags_data(stratified_data, </span></span>
@@ -466,7 +471,7 @@ option, but also includes random year-effect terms that track annual
 fluctuations around the smooth. This is the model that the Canadian
 Wildlife Service is now using for the annual status and trend
 estimates.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="co">#stratified_data &lt;- stratify(by = "bbs_usgs")</span></span>
 <span>    </span>
 <span>    <span class="co">#jags_data_gamye &lt;- prepare_jags_data(stratified_data, </span></span>
@@ -495,7 +500,7 @@ estimates.</p>
 first year, so that the first-differences of the sequence of
 year-effects are random effects with mean = 0 and an estimated variance.
 This model has been described in Link et al. 2017 <a href="https://doi.org/10.1650/CONDOR-17-1.1" class="external-link uri">https://doi.org/10.1650/CONDOR-17-1.1</a></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="co">#stratified_data &lt;- stratify(by = "bbs_usgs")</span></span>
 <span>    </span>
 <span>    <span class="co">#jags_data_firstdiff &lt;- prepare_jags_data(stratified_data, </span></span>
@@ -537,7 +542,7 @@ distributions to model the extra-Poisson variance:</p>
 particularly species that are sometimes observed in large groups. Note:
 the heavy-tailed version can require significantly more time to converge
 (~2-5 fold increase in processing time).</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#stratified_data &lt;- stratify(by = "bbs_usgs")</span></span>
 <span>    </span>
 <span>    <span class="co">#jags_data_firstdiff &lt;- prepare_jags_data(stratified_data, </span></span>
@@ -571,7 +576,7 @@ year. This approach retransforms an annual prediction for every
 observer-route combination in the stratum and then averages across those
 predictions.</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">...</span> ,</span>
 <span>                 parameters_to_save <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>                 <span class="va">...</span> <span class="op">)</span></span>
@@ -590,7 +595,7 @@ log-scale prediction for each year and stratum, then retransforms that
 log-scale prediction to the count-scale. This is the approach described
 in Sauer and Link (2011; <a href="https://doi.org/10.1525/auk.2010.09220" class="external-link uri">https://doi.org/10.1525/auk.2010.09220</a>).</li>
 </ul>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">...</span> ,</span>
 <span>                 parameters_to_save <span class="op">=</span> <span class="st">"n2"</span>,</span>
 <span>                 <span class="va">...</span> <span class="op">)</span></span>
@@ -638,7 +643,7 @@ comprehensive in that they include the full estimated trajectory, but
 they will vary more between subsequent years (e.g., more variability
 between a 1970-2017 trend and a 1970-2018 trend), because they include
 the effects of the annual fluctuations.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">...</span> ,</span>
 <span>                 parameters_to_save <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>                 <span class="va">...</span> <span class="op">)</span></span>
@@ -653,7 +658,7 @@ status and trend analyses, the visualized population trajectories are
 calculated using the full trajectory, and the trend estimates are
 derived from the decomposed trajectory using only the smooth
 component.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_model.html">run_model</a></span><span class="op">(</span><span class="va">...</span> ,</span>
 <span>                 parameters_to_save <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>,<span class="st">"n3"</span><span class="op">)</span>,</span>
 <span>                 <span class="va">...</span> <span class="op">)</span></span>
@@ -726,23 +731,23 @@ output table by setting the <code>slope = TRUE</code> argument in
 calculated, but additional columns are added that include the alternate
 estimates. NOTE: the <code><a href="../reference/plot_map.html">plot_map()</a></code> function can map slope
 trends as well with the same <code>slope = TRUE</code> argument.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>    <span class="co">#jags_data_firstdiff &lt;- prepare_jags_data(stratified_data, </span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                           species_to_run = "American Kestrel",</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                           model = "firstdiff")</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#jags_mod_full_firstdiff &lt;- run_model(jags_data = jags_data)</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                               </span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#firstdiff_ind &lt;- generate_indices(jags_mod = jags_mod_full_firstdiff,</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                  jags_data = jags_data_firstdiff,</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                  regions = c("continental","stratum"))</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    fd_slope_trends_08_18 <span class="ot">&lt;-</span> <span class="fu">generate_trends</span>(<span class="at">indices =</span> firstdiff_ind,</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">Min_year =</span> <span class="dv">2008</span>,</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">Max_year =</span> <span class="dv">2018</span>,</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">slope =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_map</span>(fd_slope_trends_0<span class="fl">.8</span>_18,</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">slope =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stratify_by =</span> <span class="st">"bbs_usgs"</span>)</span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>    <span class="co">#jags_data_firstdiff &lt;- prepare_jags_data(stratified_data, </span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                           species_to_run = "American Kestrel",</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                           model = "firstdiff")</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#jags_mod_full_firstdiff &lt;- run_model(jags_data = jags_data)</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                               </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#firstdiff_ind &lt;- generate_indices(jags_mod = jags_mod_full_firstdiff,</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                  jags_data = jags_data_firstdiff,</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                                  regions = c("continental","stratum"))</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    fd_slope_trends_08_18 <span class="ot">&lt;-</span> <span class="fu">generate_trends</span>(<span class="at">indices =</span> firstdiff_ind,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">Min_year =</span> <span class="dv">2008</span>,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">Max_year =</span> <span class="dv">2018</span>,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">slope =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_map</span>(fd_slope_trends_0<span class="fl">.8</span>_18,</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">slope =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">stratify_by =</span> <span class="st">"bbs_usgs"</span>)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    <span class="er">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="percent-change-and-probability-of-change">Percent Change and probability of change<a class="anchor" aria-label="anchor" href="#percent-change-and-probability-of-change"></a>
@@ -764,7 +769,7 @@ deriving statements such as “our model suggests that there is a 95%
 probability that the species has increased (i.e., &gt; 0% increase) and
 a 45 percent probability that the species has increased more than 2-fold
 (i.e., &gt; 100% increase)”</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="va">fd_slope_trends_08_18</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_trends.html">generate_trends</a></span><span class="op">(</span>indices <span class="op">=</span> <span class="va">firstdiff_ind</span>,</span>
 <span>                                             Min_year <span class="op">=</span> <span class="fl">2008</span>,</span>
 <span>                                             Max_year <span class="op">=</span> <span class="fl">2018</span>,</span>
@@ -779,7 +784,7 @@ a 45 percent probability that the species has increased more than 2-fold
 <p>Yes, you can calculate the trend and trajectories for custom
 combinations of strata, such as the trends for Eastern and Western
 populations of Lincoln’s Sparrow.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="co">#stratification &lt;- "bbs_cws"</span></span>
 <span>    <span class="co">#strat_data &lt;- stratify(by = stratification, sample_data = TRUE)</span></span>
 <span>    <span class="co">#jags_data &lt;- prepare_jags_data(strat_data, </span></span>
@@ -792,18 +797,18 @@ population trajectories using a customized grouping of the original
 strata.</p>
 <p>First extract a dataframe that defines the original strata used in
 the analysis.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">st_comp_regions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bbsBayes-defunct.html">get_composite_regions</a></span><span class="op">(</span>strata_type <span class="op">=</span> <span class="va">stratification</span><span class="op">)</span></span></code></pre></div>
 <p>The add a column to the dataframe that groups the original strata
 into the desired custom regions.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">st_comp_regions</span><span class="op">$</span><span class="va">East_West</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">st_comp_regions</span><span class="op">$</span><span class="va">bcr</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">12</span><span class="op">:</span><span class="fl">14</span>,<span class="fl">22</span><span class="op">:</span><span class="fl">31</span><span class="op">)</span>,<span class="st">"East"</span>,<span class="st">"West"</span><span class="op">)</span></span></code></pre></div>
 <p>st_comp_regions can now be used as the dataframe input to the
 argument alt_region_names in <code><a href="../reference/generate_indices.html">generate_indices()</a></code>, with
 “East_West” as the value for the argument regions. The relevant trends
 can be calculated using just the <code><a href="../reference/generate_trends.html">generate_trends()</a></code>
 function.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">east_west_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_indices.html">generate_indices</a></span><span class="op">(</span>jags_mod <span class="op">=</span> <span class="va">jags_mod</span>,</span>
 <span>                                      jags_data <span class="op">=</span> <span class="va">jags_data</span>,</span>
 <span>                                      alt_region_names <span class="op">=</span> <span class="va">st_comp_regions</span>,</span>
@@ -814,14 +819,14 @@ function.</p>
 <h2 id="exporting-the-jags-model">Exporting the JAGS model<a class="anchor" aria-label="anchor" href="#exporting-the-jags-model"></a>
 </h2>
 <p>You can easily export any of the bbsBayes models to a text file.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">model_to_file</span><span class="op">(</span>model <span class="op">=</span> <span class="st">"slope"</span>,</span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/model_to_file.html">model_to_file</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"slope"</span>,</span>
 <span>              filename <span class="op">=</span> <span class="st">"my_slope_model.txt"</span><span class="op">)</span></span></code></pre></div>
 <p>Then, you can modify the model text (e.g., try a different prior) and
 run the modified model</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>run_model <span class="ot">&lt;-</span> <span class="cf">function</span>(... ,</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">model_file_path =</span> <span class="st">"my_modified_slope_model.txt"</span>,</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                      ... )</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>run_model <span class="ot">&lt;-</span> <span class="cf">function</span>(... ,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">model_file_path =</span> <span class="st">"my_modified_slope_model.txt"</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                      ... )</span></code></pre></div>
 <p>Details coming soon…</p>
 </div>
 <div class="section level2">

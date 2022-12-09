@@ -36,10 +36,11 @@ a flexible search to identify correct species names)."><meta property="og:image"
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -91,8 +92,14 @@ a flexible search to identify correct species names).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>by</dt>
 <dd><p>Character. Stratification type. Either an established type, one of
-"prov_state", "bcr", "latlong", "bbs_cws", "bbs_usgs", or a custom name (see
-strata_custom for details).</p></dd>
+"prov_state", "bcr", "latlong", "bbs_cws", "bbs_usgs", or a custom name
+(see strata_custom for details).</p></dd>
+
+
+<dt>species</dt>
+<dd><p>Character. Bird species of interest. Can be specified by
+English, French, or Scientific names, or AOU code. Use <code><a href="search_species.html">search_species()</a></code>
+for loose matching to find the exact name/code needed.</p></dd>
 
 
 <dt>strata_custom</dt>
@@ -106,12 +113,17 @@ polygons defining the custom stratifications. See Details.</p></dd>
 forms. See Details.</p></dd>
 
 
+<dt>release</dt>
+<dd><p>Numeric. Yearly release. Options are 2022 (default including
+data through 2021 field season) or 2020 (including data through 2019)</p></dd>
+
+
 <dt>sample_data</dt>
 <dd><p>Logical. Use sample data (just Pacific Wren)</p></dd>
 
 
 <dt>quiet</dt>
-<dd><p>Logical. Suppress progress messages</p></dd>
+<dd><p>Logical. Suppress progress messages? Default <code>FALSE</code></p></dd>
 
 
 <dt>lump_species_forms</dt>
@@ -154,7 +166,7 @@ other species.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Sample Data - USGS BBS stara</span></span></span>
+<span class="r-in"><span><span class="co"># Sample Data - USGS BBS strata</span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_usgs"</span>, sample_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_usgs' (standard) stratification</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using sample BBS data...</span>
@@ -164,6 +176,38 @@ other species.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Full data - species and stratification</span></span></span>
 <span class="r-in"><span><span class="co"># Use `search_species()` to get correct species name</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Stratify by CWS BBS strata</span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, species <span class="op">=</span> <span class="st">"Common Loon"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use use English, French, Scientific, or AOU codes for species names</span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, species <span class="op">=</span> <span class="st">"Plongeon huard"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, species <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, species <span class="op">=</span> <span class="st">"Gavia immer"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Stratify by Bird Conservation Regions</span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bcr"</span>, species <span class="op">=</span> <span class="st">"Great Horned Owl"</span><span class="op">)</span></span></span>
@@ -189,6 +233,19 @@ other species.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"prov_state"</span>, species <span class="op">=</span> <span class="st">"Plongeon huard"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'prov_state' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"prov_state"</span>, species <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'prov_state' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Common Loon (70)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Stratify by blocks of 1 degree of latitude X 1 degree of longitude</span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"latlong"</span>, species <span class="op">=</span> <span class="st">"Snowy Owl"</span><span class="op">)</span></span></span>
@@ -237,14 +294,6 @@ other species.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Stratify by a subset of an existing stratification</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
 <span class="r-in"><span><span class="va">my_cws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">bbs_strata</span><span class="op">[[</span><span class="st">"bbs_cws"</span><span class="op">]</span><span class="op">]</span>, <span class="va">country_code</span> <span class="op">==</span> <span class="st">"CA"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bbs_cws"</span>, strata_custom <span class="op">=</span> <span class="va">my_cws</span>, species <span class="op">=</span> <span class="st">"Snowy Owl"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'bbs_cws' (subset) stratification</span>

@@ -76,10 +76,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -102,12 +103,12 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
+  <main id="main" class="col-md-9">
+<div class="section level1">
 <div class="page-header">
 <img src="logo.png" class="logo" alt=""><h1 id="bbsbayes-">bbsBayes <a class="anchor" aria-label="anchor" href="#bbsbayes-"></a>
 </h1>
 </div>
-
 <p>This README file provides an overview of the functionality that can be accomplished with ‘bbsBayes’. It is intended to provide enough information for users to perform, at the very least, replications of status and trend estimates from the Canadian Wildlife Service and/or United States Geological Survey. However, it provides more in-depth and advanced examples for subsetting data, custom regional summaries, and more.</p>
 <p>Additional resources: * <a href="https://github.com/AdamCSmithCWS/bbsBayes_Intro_Workshop" class="external-link">Introductory bbsBayes Workshop</a> * <a href="https://doi.org/10.5334/jors.329" class="external-link">Journal Article with worked example</a></p>
 <div class="section level2">
@@ -131,11 +132,13 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"BrandonEdwards/bbsBayes"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=bbsBayes" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/BrandonEdwards/bbsBayes/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/BrandonEdwards/bbsBayes/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -175,6 +178,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://github.com/steffilazerte/bbsBayes/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/steffilazerte/bbsBayes/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/steffilazerte/bbsBayes?branch=master" class="external-link"><img src="https://codecov.io/gh/steffilazerte/bbsBayes/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://cran.r-project.org/package=bbsBayes" class="external-link"><img src="http://www.r-pkg.org/badges/version/bbsBayes" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>

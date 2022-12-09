@@ -30,10 +30,11 @@ model executables created by cmdstanr::cmdstan_model() via run_model()."><meta p
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -70,17 +71,22 @@ model executables created by <code><a href="https://mc-stan.org/cmdstanr/referen
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>level</dt>
-<dd><p>Character. Data to remove, one of "all", "state", or "stop"</p></dd>
+    <dl><dt>type</dt>
+<dd><p>Character. Which cached data to remove. One of "all", "bbs_data",
+or "models". If "all", removes entire cache directory (and all data
+contained therein). If "bbs_data", removes only BBS data downloaded with
+<code><a href="fetch_bbs_data.html">fetch_bbs_data()</a></code>. If "models", removes only model executables compiled
+when <code>run_models()</code> is run.</p></dd>
+
+
+<dt>level</dt>
+<dd><p>Character. BBS data to remove, one of "all", "state", or "stop".
+Only applies if <code>type = "bbs_data"</code></p></dd>
 
 
 <dt>release</dt>
-<dd><p>Character/Numeric. Data to remove, one of "all", 2020, or 2022</p></dd>
-
-
-<dt>cache_dir</dt>
-<dd><p>Logical. Remove entire cache directory (and all data
-contained therein)</p></dd>
+<dd><p>Character/Numeric. BBS data to remove, one of "all", 2020, or
+2022. Only applies if <code>type = "bbs_data"</code></p></dd>
 
 </dl></div>
     <div class="section level2">

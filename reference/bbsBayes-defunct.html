@@ -34,7 +34,7 @@ extract final samples from the model_fit list item in the output of
 run_model(). e.g., model_output[["model_fit"]]$draws()
 get_strata_area() and get_composite_regions() are no longer required.
 Access the strata areas and regional data by exploring the included data
-bbs_strata. e.g, `bbs_strata["bbs_usgs"].
+bbs_strata. e.g, bbs_strata[["bbs_usgs"]].
 p_waic() and waic() are no longer recommended for BBS data. Use
 cross validation instead
 extract_index_data() is no longer recommended.
@@ -74,7 +74,7 @@ extract final samples from the model_fit list item in the output of
 run_model(). e.g., model_output[["model_fit"]]$draws()
 get_strata_area() and get_composite_regions() are no longer required.
 Access the strata areas and regional data by exploring the included data
-bbs_strata. e.g, `bbs_strata["bbs_usgs"].
+bbs_strata. e.g, bbs_strata[["bbs_usgs"]].
 p_waic() and waic() are no longer recommended for BBS data. Use
 cross validation instead
 extract_index_data() is no longer recommended.
@@ -108,10 +108,11 @@ extract_index_data() is no longer recommended.
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -166,7 +167,7 @@ extract final samples from the <code>model_fit</code> list item in the output of
 <code><a href="run_model.html">run_model()</a></code>. e.g., <code>model_output[["model_fit"]]$draws()</code></p>
 <p><code>get_strata_area()</code> and <code>get_composite_regions()</code> are no longer required.
 Access the strata areas and regional data by exploring the included data
-<code>bbs_strata</code>. e.g, `bbs_strata["bbs_usgs"].</p>
+<code>bbs_strata</code>. e.g, <code>bbs_strata[["bbs_usgs"]]</code>.</p>
 <p><code>p_waic()</code> and <code>waic()</code> are no longer recommended for BBS data. Use
 cross validation instead</p>
 <p><code>extract_index_data()</code> is no longer recommended.</p>
@@ -209,6 +210,12 @@ cross validation instead</p>
 <span><span class="fu">waic</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <dl><dt>...</dt>
+<dd><p>Original function arguments</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><a href="bbsBayes-deprecated.html">bbsBayes-deprecated</a></p></div>

@@ -28,10 +28,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -77,6 +78,18 @@ data through 2021 field season) or 2020 (including data through 2019)</p></dd>
 <dd><p>Spatial data frame. PLACEHOLDER</p></dd>
 
 
+<dt>model</dt>
+<dd><p>Character. Type of model to use, must be one of "first_diff"
+(First Differences), "gam" (General Additive Model), "gamye" (General
+Additive Model with Year Effect), or "slope" (Slope model).</p></dd>
+
+
+<dt>model_variant</dt>
+<dd><p>Character. Model variant to use, must be one of
+"nonhier" (Non-hierarchical), "hier" (Hierarchical), or "spatial"
+(Spatially explicit).</p></dd>
+
+
 <dt>model_output</dt>
 <dd><p>List. Output of <code><a href="run_model.html">run_model()</a></code>.</p></dd>
 
@@ -100,7 +113,13 @@ year in data.</p></dd>
 
 
 <dt>prepped_data</dt>
-<dd><p>List. Output of <code><a href="prepare_data.html">prepare_data()</a></code>.</p>
+<dd><p>List. Output of <code><a href="prepare_data.html">prepare_data()</a></code>.</p></dd>
+
+
+<dt>variables</dt>
+<dd><p>Character vector. Specific variables (e.g.,
+<code>"strata_raw[1]"</code>) or variable types (e.g., <code>"strata_raw"</code>) for which to
+calculate metrics. If <code>NULL</code> (default) all variables are returned.</p>
 <p>Use <code>@inheritParams common_docs</code> to include the above in any function
 documentation with a matching argument (will only include matching args)</p></dd>
 

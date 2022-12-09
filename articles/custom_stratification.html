@@ -52,10 +52,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
+    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
+    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
     <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
     <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
     <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
   </div>
 </li>
@@ -101,12 +102,12 @@ custom stratifications in later steps, such as
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BrandonEdwards/bbsBayes" class="external-link">bbsBayes</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; bbsBayes v3.0.0</span></span>
 <span><span class="co">#&gt; Note: version 3+ represents a major shift in functionality, noteably:</span></span>
-<span><span class="co">#&gt;  - The underlying Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
-<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in many deprecated/renamed</span></span>
+<span><span class="co">#&gt;  - The Bayesian modelling engine has switched from *JAGS* to *Stan*</span></span>
+<span><span class="co">#&gt;  - The workflow has been streamlined, resulting in deprecated/renamed</span></span>
 <span><span class="co">#&gt;    function arguments</span></span>
 <span><span class="co">#&gt; See the documentation for more details: https://BrandonEdwards.github.io/bbsBayes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>       <span class="co"># Spatial data manipulations</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE</span></span>
+<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>    <span class="co"># General data manipulations</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -178,12 +179,12 @@ for speed rather than accuracy).</p>
 <span><span class="co">#&gt; Chain 1            term_buffer = 2 </span></span>
 <span><span class="co">#&gt; Chain 1 Iteration:  1 / 40 [  2%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
@@ -196,36 +197,41 @@ for speed rather than accuracy).</p>
 <span><span class="co">#&gt; Chain 2            term_buffer = 2 </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration:  1 / 40 [  2%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
 <span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -nan, but must be finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -nan, but must be finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
+<span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
+<span><span class="co">#&gt; Chain 1</span></span>
+<span><span class="co">#&gt; Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
+<span><span class="co">#&gt; Chain 1 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -inf, but must be finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 1</span></span>
 <span><span class="co">#&gt; Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span></span>
-<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -nan, but must be finite! (in '/tmp/RtmpPjX9yD/model-44f03714111.stan', line 227, column 3 to column 40)</span></span>
+<span><span class="co">#&gt; Chain 2 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -nan, but must be finite! (in '/tmp/RtmpMepFg7/model-242934e0b279.stan', line 227, column 3 to column 40)</span></span>
 <span><span class="co">#&gt; Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span></span>
 <span><span class="co">#&gt; Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span></span>
 <span><span class="co">#&gt; Chain 2</span></span>
-<span><span class="co">#&gt; Chain 1 Iteration: 21 / 40 [ 52%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration: 21 / 40 [ 52%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 1 Iteration: 40 / 40 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 1 finished in 149.5 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1 Iteration: 21 / 40 [ 52%]  (Sampling) </span></span>
 <span><span class="co">#&gt; Chain 2 Iteration: 40 / 40 [100%]  (Sampling) </span></span>
-<span><span class="co">#&gt; Chain 2 finished in 157.3 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1 Iteration: 40 / 40 [100%]  (Sampling) </span></span>
+<span><span class="co">#&gt; Chain 2 finished in 118.4 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1 finished in 121.2 seconds.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Both chains finished successfully.</span></span>
-<span><span class="co">#&gt; Mean chain execution time: 153.4 seconds.</span></span>
-<span><span class="co">#&gt; Total execution time: 157.6 seconds.</span></span>
-<span><span class="co">#&gt; Saving model output to /home/runner/work/bbsBayes/bbsBayes/vignettes/articles/BBS_STAN_first_diff_hier_2022-11-17_01.rds</span></span></code></pre></div>
+<span><span class="co">#&gt; Mean chain execution time: 119.8 seconds.</span></span>
+<span><span class="co">#&gt; Total execution time: 121.4 seconds.</span></span>
+<span><span class="co">#&gt; Saving model output to /home/runner/work/bbsBayes/bbsBayes/vignettes/articles/BBS_STAN_first_diff_hier_2022-12-09_01.rds</span></span></code></pre></div>
 <p>Now we can start to look at the indices and trends related to our
 model.</p>
 <p><code><a href="../reference/generate_indices.html">generate_indices()</a></code> creates indices at different regional
@@ -312,7 +318,7 @@ which creates a list of plots.</p>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">[[</span><span class="st">"east"</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="va">p</span><span class="op">[[</span><span class="st">"west"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
-<p><img src="custom_stratification_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="custom_stratification_files/figure-html/unnamed-chunk-12-1.png" width="960"></p>
 <p>Finally we can even create geofaceted plots (which is only possible
 in our case because we assigned our strata to Provinces and States and
 calculated indices for these regions).</p>
