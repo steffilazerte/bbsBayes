@@ -24,17 +24,8 @@
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
-    <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
-    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
-    <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
-    <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -68,7 +59,34 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An object of class <code>list</code> of length 3.</p>
+    
+<div class="section">
+<h3 id="bbs-data-sample"><code>bbs_data_sample</code><a class="anchor" aria-label="anchor" href="#bbs-data-sample"></a></h3>
+
+
+<p>A list containing:</p><ul><li><p><code>birds</code> - counts of each bird seen per route per</p></li>
+<li><p><code>routes</code> - data for each route run per year</p></li>
+<li><p><code>species</code> - species list of North America</p></li>
+</ul></div>
+
+    </div>
+    <div class="section level2">
+    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
+    <p><a href="https://www.sciencebase.gov/" class="external-link">https://www.sciencebase.gov/</a> via <code><a href="fetch_bbs_data.html">fetch_bbs_data()</a></code></p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>A sample dataset containing only data for Pacific Wrens for the 2022
+state-level BBS data. The full count set is obtained via the function
+<code><a href="fetch_bbs_data.html">fetch_bbs_data()</a></code>. The data is obtained from the United States Geological
+Survey and is subject to change as new data is added each year. See
+References for citation.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Ziolkowski Jr., D.J., Lutmerding, M., Aponte, V.I., and Hudson, M-A.R., 2022,
+North American Breeding Bird Survey Dataset 1966 - 2021: U.S. Geological
+Survey data release, https://doi.org/10.5066/P97WAZE5</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

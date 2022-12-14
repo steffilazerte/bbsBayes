@@ -76,10 +76,10 @@
     <loc>http://steffilazerte.ca/bbsBayes/reference/bbs_strata.html</loc>
   </url>
   <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/bird_sample.html</loc>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/common_docs.html</loc>
   </url>
   <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/common_docs.html</loc>
+    <loc>http://steffilazerte.ca/bbsBayes/reference/copy_model_file.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/fetch_bbs_data.html</loc>
@@ -112,9 +112,6 @@
     <loc>http://steffilazerte.ca/bbsBayes/reference/load_map.html</loc>
   </url>
   <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/model_to_file.html</loc>
-  </url>
-  <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/pacific_wren_model.html</loc>
   </url>
   <url>
@@ -139,9 +136,6 @@
     <loc>http://steffilazerte.ca/bbsBayes/reference/remove_cache.html</loc>
   </url>
   <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/route_sample.html</loc>
-  </url>
-  <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/run_model.html</loc>
   </url>
   <url>
@@ -152,9 +146,6 @@
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/species_forms.html</loc>
-  </url>
-  <url>
-    <loc>http://steffilazerte.ca/bbsBayes/reference/species_sample.html</loc>
   </url>
   <url>
     <loc>http://steffilazerte.ca/bbsBayes/reference/stratify.html</loc>

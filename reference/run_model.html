@@ -24,17 +24,8 @@
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/advanced.html">Advanced Example</a>
-    <a class="dropdown-item" href="../articles/convergence.html">Assessing Model Convergence</a>
-    <a class="dropdown-item" href="../articles/custom_stratification.html">Custom Stratifications</a>
-    <a class="dropdown-item" href="../articles/models.html">Models in bbsBayes</a>
-    <a class="dropdown-item" href="../articles/models_first_diff_nonhier.html">Models: First Difference Non-hierarchical</a>
-    <a class="dropdown-item" href="../articles/workflow.html">Workflow</a>
-    <a class="dropdown-item" href="../articles/stratification.html">Stratification</a>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -307,7 +298,7 @@ prepared data counts from <code><a href="prepare_data.html">prepare_data()</a></
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>There are two ways you can customize
 the model run. The first is to supply a custom <code>model_file</code> created with the
-<code><a href="model_to_file.html">model_to_file()</a></code> function and then edited by hand.</p>
+<code><a href="copy_model_file.html">copy_model_file()</a></code> function and then edited by hand.</p>
 <p>Second, you can supply a custom list of initialization parameters. You can
 supply these parameters in anyway that <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code> accepts the
 <code>init</code> argument. One way is to use the bbsBayes created parameters and modify
@@ -345,22 +336,22 @@ advanced examples and explanations.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1            term_buffer = 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration:  1 / 40 [  2%]  (Warmup) </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Precision parameter is inf, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -nan, but must be finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 1 </span>
@@ -373,35 +364,35 @@ advanced examples and explanations.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2            term_buffer = 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration:  1 / 40 [  2%]  (Warmup) </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is 0, but must be positive finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Informational Message: The current Metropolis proposal is about to be rejected because of the following issue:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Precision parameter is inf, but must be positive finite! (in '/tmp/Rtmp7u0qSW/model-23d4248e0083.stan', line 227, column 3 to column 40)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 Exception: neg_binomial_2_log_lpmf: Log location parameter[1] is -nan, but must be finite! (in '/tmp/RtmpYpydmY/model-253177714327.stan', line 227, column 3 to column 40)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 If this warning occurs sporadically, such as for highly constrained variable types like covariance matrices, then the sampler is fine,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 but if this warning occurs often then your model may be either severely ill-conditioned or misspecified.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Chain 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 40 / 40 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 113.0 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 21 / 40 [ 52%]  (Sampling) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 Iteration: 40 / 40 [100%]  (Sampling) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 123.7 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1 finished in 118.6 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 Iteration: 40 / 40 [100%]  (Sampling) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2 finished in 126.9 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Both chains finished successfully.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 118.3 seconds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 123.8 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean chain execution time: 122.8 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total execution time: 127.1 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Saving model output to /home/runner/work/bbsBayes/bbsBayes/docs/reference/BBS_STAN_first_diff_hier_2022-12-14_01.rds</span>
 <span class="r-in"><span></span></span>
