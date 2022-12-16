@@ -63,9 +63,9 @@ stratify()."><meta property="og:image" content="http://steffilazerte.ca/bbsBayes
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>species</dt>
-<dd><p>Character. Search term, either name in English or French, AOU
-code, or scientific genus or species. Matches by regular expression but all
-lower case.</p></dd>
+<dd><p>Character/Numeric. Search term, either name in English or
+French, AOU code, or scientific genus or species. Matches by regular
+expression but ignores case.</p></dd>
 
 
 <dt>combine_species_forms</dt>
@@ -160,6 +160,49 @@ species names.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">7</span>353 unid. Black-capped C… unid … Poecil… Pass… Parid… Poec… atrica… TRUE   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">7</span>354 unid. Black-capped C… unid … Poecil… Pass… Parid… Poec… atrica… TRUE   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">7</span>351 unid. western chicka… unid … Poecil… Pass… Parid… Poec… sp.     TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​unid_combined</span></span>
+<span class="r-in"><span><span class="fu">search_species</span><span class="op">(</span><span class="fl">7360</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     aou english            french     spanish order family genus species unid_…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">7</span>360 Carolina Chickadee Mésange d… Poecil… Pass… Parid… Poec… caroli… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​unid_combined</span></span>
+<span class="r-in"><span><span class="fu">search_species</span><span class="op">(</span><span class="fl">73</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 28 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      aou english               french spanish order family genus species unid_…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">1</span>730 Brant                 Berna… Branta… Anse… Anati… Bran… bernic… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">2</span>973 Blue Grouse (Dusky/S… Tétra… Dendra… Gall… Phasi… Dend… obscur… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">2</span>730 Killdeer              Pluvi… Charad… Char… Chara… Char… vocife… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   730 Aleutian Tern         Stern… Onycho… Char… Larid… Onyc… aleuti… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">3</span>731 Whiskered Screech-Owl Petit… Megasc… Stri… Strig… Mega… tricho… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">3</span>732 Western Screech-Owl   Petit… Megasc… Stri… Strig… Mega… kennic… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">3</span>730 Eastern Screech-Owl   Petit… Megasc… Stri… Strig… Mega… asio    TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">4</span>730 Eurasian Skylark      Aloue… Alauda… Pass… Alaud… Alau… arvens… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">7</span>360 Carolina Chickadee    Mésan… Poecil… Pass… Parid… Poec… caroli… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">7</span>350 Black-capped Chickad… Mésan… Poecil… Pass… Parid… Poec… atrica… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 18 more rows, and abbreviated variable name ¹​unid_combined</span></span>
+<span class="r-in"><span><span class="fu">search_species</span><span class="op">(</span><span class="st">"^73"</span><span class="op">)</span> <span class="co"># Use regex to match aou codes starting with 73</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      aou english               french spanish order family genus species unid_…¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>   730 Aleutian Tern         Stern… Onycho… Char… Larid… Onyc… aleuti… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">7</span>360 Carolina Chickadee    Mésan… Poecil… Pass… Parid… Poec… caroli… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">7</span>350 Black-capped Chickad… Mésan… Poecil… Pass… Parid… Poec… atrica… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">7</span>380 Mountain Chickadee    Mésan… Poecil… Pass… Parid… Poec… gambeli TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">7</span>370 Mexican Chickadee     Mésan… Poecil… Pass… Parid… Poec… sclate… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">7</span>352 unid. Carolina Chick… unid … Poecil… Pass… Parid… Poec… caroli… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">7</span>353 unid. Black-capped C… unid … Poecil… Pass… Parid… Poec… atrica… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">7</span>354 unid. Black-capped C… unid … Poecil… Pass… Parid… Poec… atrica… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">7</span>351 unid. western chicka… unid … Poecil… Pass… Parid… Poec… sp.     TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">7</span>340 Bridled Titmouse      Mésan… Baeolo… Pass… Parid… Baeo… wollwe… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>  <span style="text-decoration: underline;">7</span>330 Oak Titmouse          Mésan… Baeolo… Pass… Parid… Baeo… inorna… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>  <span style="text-decoration: underline;">7</span>331 Juniper Titmouse      Mésan… Baeolo… Pass… Parid… Baeo… ridgwa… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>  <span style="text-decoration: underline;">7</span>332 unid. Oak Titmouse /… unid … Baeolo… Pass… Parid… Baeo… inorna… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span>  <span style="text-decoration: underline;">7</span>310 Tufted Titmouse       Mésan… Baeolo… Pass… Parid… Baeo… bicolor TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span>  <span style="text-decoration: underline;">7</span>320 Black-crested Titmou… Mésan… Baeolo… Pass… Parid… Baeo… atricr… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span>  <span style="text-decoration: underline;">7</span>315 unid. Tufted Titmous… unid … Baeolo… Pass… Parid… Baeo… bicolo… TRUE   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span>  <span style="text-decoration: underline;">7</span>300 Pygmy Nuthatch        Sitte… Sitta … Pass… Sitti… Sitta pygmaea TRUE   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​unid_combined</span></span>
 <span class="r-in"><span><span class="fu">search_species</span><span class="op">(</span><span class="st">"blue grouse"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 9</span></span>

@@ -99,12 +99,16 @@ has been observed. Defaults to 3</p></dd>
 
 <dt>min_max_route_years</dt>
 <dd><p>Required minimum number of years with non-zero
-observations of species on at least 1 route. Defaults to 3</p></dd>
+observations of species on at least 1 route. Defaults to 3. Only retain
+strata with at least one route where the species was observed at least once
+in this many years.</p></dd>
 
 
 <dt>min_mean_route_years</dt>
 <dd><p>Required minimum average of years per route with
-the species observed. Defaults to 1.</p></dd>
+the species observed. Defaults to 1. Only retain strata where the average
+number of years the species was observed per route is greater than this
+value.</p></dd>
 
 
 <dt>quiet</dt>
