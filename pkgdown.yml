@@ -6,11 +6,19 @@ articles:
   convergence: convergence.html
   custom_stratification: custom_stratification.html
   models: models.html
+  models_first_diff_hier: models_first_diff_hier.html
   models_first_diff_nonhier: models_first_diff_nonhier.html
+  models_first_diff_spatial: models_first_diff_spatial.html
+  models_gam_hier: models_gam_hier.html
+  models_gam_spatial: models_gam_spatial.html
+  models_gamye_hier: models_gamye_hier.html
+  models_gamye_spatial: models_gamye_spatial.html
+  models_slope_hier: models_slope_hier.html
+  models_slope_spatial: models_slope_spatial.html
   workflow: workflow.html
   bbsBayes: bbsBayes.html
   stratification: stratification.html
-last_built: 2022-12-16T22:44Z
+last_built: 2022-12-16T23:49Z
 urls:
   reference: http://steffilazerte.ca/bbsBayes/reference
   article: http://steffilazerte.ca/bbsBayes/articles
