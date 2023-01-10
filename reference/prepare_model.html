@@ -65,7 +65,10 @@
 <span>  basis <span class="op">=</span> <span class="st">"mgcv"</span>,</span>
 <span>  calculate_nu <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  calculate_log_lik <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  calculate_CV <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  calculate_cv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cv_k <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  cv_fold_groups <span class="op">=</span> <span class="st">"obs_n"</span>,</span>
+<span>  cv_omit_singles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  set_seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -131,8 +134,27 @@ a factor of <code>gamma(2, 0.1)</code>. Default is <code>FALSE</code>.</p></dd>
 log-likelihood of the data given the model. Default is <code>FALSE</code>.</p></dd>
 
 
-<dt>calculate_CV</dt>
-<dd><p>Logical. Whether to use cross validation.</p></dd>
+<dt>calculate_cv</dt>
+<dd><p>Logical. Whether to use bbsBayes' cross validation. See
+Details below.</p></dd>
+
+
+<dt>cv_k</dt>
+<dd><p>Numeric. The number of K folds to include (only relevant if
+<code>calculate_cv = TRUE</code>).</p></dd>
+
+
+<dt>cv_fold_groups</dt>
+<dd><p>Character. The data column to use when determining the
+grouping level of the observations to be assigned to different fold groups.
+Must be one of <code>obs_n</code> or <code>routes</code> (only relevant if <code>calculate_cv = TRUE</code>). See the <a href="https://steffilazerte.ca/bbsBayes/articles/models.html" class="external-link">models article</a> for more
+details.</p></dd>
+
+
+<dt>cv_omit_singles</dt>
+<dd><p>Logical. Whether to omit test groups with no
+replication (only relevant if <code>calculate_cv = TRUE</code>). See the <a href="https://steffilazerte.ca/bbsBayes/articles/models.html" class="external-link">models article</a> for more
+details.</p></dd>
 
 
 <dt>set_seed</dt>
@@ -165,6 +187,8 @@ the model run. The first is to supply a custom <code>model_file</code> created w
 (<code>init_values</code>) in the output of <code>prepare_model()</code> to customize the <code>init</code>
 supplied to <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code>. You can supply these parameters in anyway
 that <code><a href="https://mc-stan.org/cmdstanr/reference/model-method-sample.html" class="external-link">cmdstanr::sample()</a></code> accepts the <code>init</code> argument.</p>
+<p>To implement bbsBayes' version of cross validation, set <code>calculate_cv = TRUE</code>. You can set up your own system for cross validation by modifying the
+<code>folds</code> list-item in the output of <code>prepare_model()</code>.</p>
 <p>See the <a href="https://steffilazerte.ca/bbsBayes/articles/models.html" class="external-link">models article</a> for more
 advanced examples and explanations.</p>
     </div>
