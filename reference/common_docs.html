@@ -56,13 +56,14 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>level</dt>
-<dd><p>Character. Which type of BBS counts to fetch, "state" or "stop".
-Defaults to "state".</p></dd>
+<dd><p>Character. Which type of BBS counts to use, "state" or "stop".
+Default "state".</p></dd>
 
 
 <dt>release</dt>
-<dd><p>Numeric. Yearly release. Options are 2022 (default including
-data through 2021 field season) or 2020 (including data through 2019)</p></dd>
+<dd><p>Numeric. Which yearly release to use, 2022 (including data
+through 2021 field season) or 2020 (including data through 2019). Default
+2022.</p></dd>
 
 
 <dt>sf</dt>
@@ -77,7 +78,7 @@ Additive Model with Year Effect), or "slope" (Slope model).</p></dd>
 
 <dt>model_variant</dt>
 <dd><p>Character. Model variant to use, must be one of
-"nonhier" (Non-hierarchical), "hier" (Hierarchical), or "spatial"
+"nonhier" (Non-hierarchical), "hier" (Hierarchical; default), or "spatial"
 (Spatially explicit).</p></dd>
 
 
@@ -132,11 +133,14 @@ reproducibility.</p></dd>
 
 
 <dt>quiet</dt>
-<dd><p>Logical. Suppress progress messages? Default <code>FALSE</code></p>
-<p>Use <code>@inheritParams common_docs</code> to include the above in any function
-documentation with a matching argument (will only include matching args)</p></dd>
+<dd><p>Logical. Suppress progress messages? Default <code>FALSE</code>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Use <code>@inheritParams common_docs</code> to include the above in any function
+documentation with a matching argument (will only include matching args)</p>
+    </div>
     <div class="section level2">
     <h2 id="naturecounts-account">NatureCounts account<a class="anchor" aria-label="anchor" href="#naturecounts-account"></a></h2>
     
