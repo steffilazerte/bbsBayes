@@ -142,20 +142,20 @@ log-likelihood of the data given the model. Default <code>FALSE</code>.</p></dd>
 
 
 <dt>calculate_cv</dt>
-<dd><p>Logical. Whether to use bbsBayes' cross validation. See
-Details.</p></dd>
+<dd><p>Logical. Whether to use bbsBayes' cross validation.
+Note this is <strong>experimental</strong>. See Details.</p></dd>
 
 
 <dt>cv_k</dt>
 <dd><p>Numeric. The number of K folds to include (only relevant if
-<code>calculate_cv = TRUE</code>). Default 10.</p></dd>
+<code>calculate_cv = TRUE</code>). Default 10. Note this is <strong>experimental</strong>.</p></dd>
 
 
 <dt>cv_fold_groups</dt>
 <dd><p>Character. The data column to use when determining the
 grouping level of the observations to be assigned to different fold groups.
 Must be one of <code>obs_n</code> (default) or <code>routes</code> (only relevant if
-<code>calculate_cv = TRUE</code>). See the <a href="https://steffilazerte.ca/bbsBayes/articles/models.html" class="external-link">models article</a> for more
+<code>calculate_cv = TRUE</code>). Note this is <strong>experimental</strong>. See the <a href="https://steffilazerte.ca/bbsBayes/articles/models.html" class="external-link">models article</a> for more
 details.</p></dd>
 
 

@@ -73,6 +73,7 @@ a flexible search to identify correct species names).</p>
 <span>  combine_species_forms <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  release <span class="op">=</span> <span class="fl">2022</span>,</span>
 <span>  sample_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_omitted <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">lump_species_forms</span>,</span>
 <span>  <span class="va">bbs_data</span></span>
@@ -112,6 +113,13 @@ through 2021 field season) or 2020 (including data through 2019). Default
 
 <dt>sample_data</dt>
 <dd><p>Logical. Use sample data (just Pacific Wrens). Default
+<code>FALSE</code>.</p></dd>
+
+
+<dt>return_omitted</dt>
+<dd><p>Logical. Whether or not to return a data frame of
+route-years which were omitted during stratification as they did not
+overlap with any stratum. For checking and troubleshooting. Default
 <code>FALSE</code>.</p></dd>
 
 
@@ -251,8 +259,35 @@ for more details.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Snowy Owl (3760)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 80/119,567 routes that do not match a stratum...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 80/119,567 route-years that do not match a stratum.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     To see omitted routes use `return_omitted = TRUE` (see ?stratify)</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Check routes omitted by stratification</span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"latlong"</span>, species <span class="op">=</span> <span class="st">"Snowy Owl"</span>, return_omitted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using 'latlong' (standard) stratification</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Snowy Owl (3760)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 80/119,567 route-years that do not match a stratum.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     Returning omitted routes.</span>
+<span class="r-in"><span><span class="va">s</span><span class="op">[[</span><span class="st">"routes_omitted"</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 80 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     year strata_name country state    route route…¹ latit…² longi…³   bcr  obs_n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">1</span>988 <span style="color: #BB0000;">NA</span>          US      CALIFOR… 14-1… SANTA …    34.0  -<span style="color: #BB0000;">120.</span>     32 1.06<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  <span style="text-decoration: underline;">1</span>987 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-83 KEY WE…    24.7   -<span style="color: #BB0000;">81.2</span>    31 1.11<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  <span style="text-decoration: underline;">1</span>999 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-1… SUGARL…    24.7   -<span style="color: #BB0000;">81.2</span>    31 1.02<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  <span style="text-decoration: underline;">2</span>002 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-1… SUGARL…    24.7   -<span style="color: #BB0000;">81.2</span>    31 1.22<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  <span style="text-decoration: underline;">2</span>003 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-1… SUGARL…    24.7   -<span style="color: #BB0000;">81.2</span>    31 1.22<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">2</span>004 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-1… SUGARL…    24.7   -<span style="color: #BB0000;">81.2</span>    31 1.08<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">2</span>005 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-2… SUGARL…    24.6   -<span style="color: #BB0000;">81.6</span>    31 1.08<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>006 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-2… SUGARL…    24.6   -<span style="color: #BB0000;">81.6</span>    31 1.08<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>007 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-2… SUGARL…    24.6   -<span style="color: #BB0000;">81.6</span>    31 1.08<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>008 <span style="color: #BB0000;">NA</span>          US      FLORIDA  25-2… SUGARL…    24.6   -<span style="color: #BB0000;">81.6</span>    31 1.09<span style="color: #949494;">e</span>6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 70 more rows, 1 more variable: total_spp &lt;dbl&gt;, and abbreviated</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   variable names ¹​route_name, ²​latitude, ³​longitude</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use combined or non-combined species forms</span></span></span>
 <span class="r-in"><span></span></span>
@@ -299,8 +334,9 @@ for more details.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Snowy Owl (3760)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Combining BCR 7 and NS and PEI...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 101,474/119,567 routes that do not match a stratum...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 101,474/119,567 route-years that do not match a stratum.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     To see omitted routes use `return_omitted = TRUE` (see ?stratify)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">my_bcr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">bbs_strata</span><span class="op">[[</span><span class="st">"bcr"</span><span class="op">]</span><span class="op">]</span>, <span class="va">strata_name</span> <span class="op">==</span> <span class="st">"BCR8"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">stratify</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"bcr"</span>, strata_custom <span class="op">=</span> <span class="va">my_bcr</span>,</span></span>
@@ -309,8 +345,9 @@ for more details.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading BBS data...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering to species Yellow-rumped Warbler (all forms) (6556)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Stratifying data...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 118,210/119,567 routes that do not match a stratum...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Renaming routes...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Omitting 118,210/119,567 route-years that do not match a stratum.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     To see omitted routes use `return_omitted = TRUE` (see ?stratify)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Stratify by Custom stratification, using sf map object</span></span></span>
 <span class="r-in"><span><span class="co"># e.g. with WBPHS stratum boundaries 2019</span></span></span>
